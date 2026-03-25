@@ -165,8 +165,7 @@
       <div class="toolbar">
         <button onclick="toggleView('admin')">Admin Görünümü</button>
         <button class="secondary" onclick="toggleView('guest')">Misafir Menüsü</button>
-        <button class="warn" onclick="resetDemo()">Örnek Veriyi Sıfırla</button>
-      </div>
+              </div>
       <div class="count" id="menuCount"></div>
     </div>
 
@@ -280,13 +279,6 @@
 
     function saveData() {
       localStorage.setItem("cocktailMenuDemoV2", JSON.stringify(data));
-    }
-
-    function resetDemo() {
-      localStorage.removeItem("cocktailMenuDemoV2");
-      data = JSON.parse(JSON.stringify(DEFAULT_DATA));
-      seedCocktailSpiritLinks();
-      render();
     }
 
     function toggleView(view) {
