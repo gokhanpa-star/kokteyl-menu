@@ -3,106 +3,309 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kokteyl Menü (Export/Import)</title>
+<title>Kokteyl Menü - Kopyala Yapıştır</title>
 <style>
-body{font-family:Arial;background:#0f172a;color:#fff;margin:0;padding:20px}
-.container{max-width:800px;margin:auto}
-input,button{padding:10px;margin:5px;border-radius:8px;border:none}
-button{background:#38bdf8;color:#000;font-weight:bold}
-.card{background:#1e293b;padding:10px;margin:10px 0;border-radius:10px}
+:root{--bg:#08111d;--card:#101b2d;--line:#22324a;--text:#f8fafc;--muted:#9fb0c8;--gold:#f4d06f;--green:#34d399;--red:#f87171}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#07101d,#0f172a);color:var(--text)}
+.wrap{max-width:980px;margin:0 auto;padding:16px}
+.hero,.card{background:rgba(16,27,45,.96);border:1px solid var(--line);border-radius:20px;padding:16px}
+.hero{margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input,textarea,button{font:inherit}
+input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #334155;background:#0a1322;color:var(--text)}
+textarea{min-height:110px;resize:vertical}
+button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+.primary{background:var(--gold);color:#192230}.secondary{background:#1a2840;color:var(--text);border:1px solid #334155}.green{background:var(--green);color:#052012}.red{background:var(--red);color:#fff}
+.item{background:#0a1322;border:1px solid #22314b;border-radius:16px;padding:14px;margin-bottom:12px}
+.tag{display:inline-block;padding:5px 8px;border-radius:999px;background:#102035;border:1px solid #2c4261;margin:4px 6px 0 0;font-size:12px}
+.ok{color:#86efac;font-weight:700}.off{color:#fca5a5;font-weight:700}.hidden{display:none}.copybox{background:#091321;border:1px dashed #36506f}
+p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
+  <div class="hero">
+    <h1>🍸 Kokteyl Menü</h1>
+    <p>Bilgisayarda menünü hazırlayıp veriyi kopyalayabilir, telefonda yapıştırıp aynı menüyü açabilirsin.</p>
+    <div class="row">
+      <button class="primary" onclick="showMode('admin')">Admin</button>
+      <button class="secondary" onclick="showMode('guest')">Misafir Menüsü</button>
+    </div>
+  </div>
 
-<h2>🍸 Admin Panel</h2>
+  <div id="adminMode">
+    <div class="grid">
+      <div class="card">
+        <h2>İçkiler</h2>
+        <div class="row">
+          <div style="flex:1"><input id="newSpiritName" placeholder="Yeni içki adı"></div>
+          <div><button class="green" onclick="addSpirit()">İçki Ekle</button></div>
+        </div>
+        <div style="height:12px"></div>
+        <div id="spiritList"></div>
+      </div>
 
-<input id="drink" placeholder="İçki ekle">
-<button onclick="addDrink()">Ekle</button>
+      <div class="card">
+        <h2>Yeni Kokteyl</h2>
+        <div class="row"><div style="flex:1"><input id="cocktailName" placeholder="Kokteyl adı"></div></div>
+        <div style="height:12px"></div>
+        <div class="small">Gerekli içkiler</div>
+        <div id="spiritChecklist"></div>
+        <div style="height:12px"></div>
+        <textarea id="cocktailRecipe" placeholder="Kısa tarif veya servis notu"></textarea>
+        <div style="height:12px"></div>
+        <button class="primary" onclick="addCocktail()">Kokteyl Ekle</button>
+      </div>
+    </div>
 
-<div id="drinks"></div>
+    <div class="card" style="margin-top:16px">
+      <h2>Kokteyl Veritabanı</h2>
+      <div id="allCocktails"></div>
+    </div>
 
-<hr>
+    <div class="card copybox" style="margin-top:16px">
+      <h2>Veriyi Kopyala / Yapıştır</h2>
+      <p>Bilgisayarda “Veriyi Hazırla” deyip metni kopyala. Telefonda aynı kutuya yapıştırıp “Veriyi Yükle” de.</p>
+      <textarea id="transferBox" placeholder="Burada menü verisi görünecek"></textarea>
+      <div class="row" style="margin-top:12px">
+        <button class="primary" onclick="prepareExport()">Veriyi Hazırla</button>
+        <button class="secondary" onclick="copyTransfer()">Kopyala</button>
+        <button class="green" onclick="importTransfer()">Veriyi Yükle</button>
+      </div>
+    </div>
+  </div>
 
-<input id="cocktail" placeholder="Kokteyl adı">
-<input id="recipe" placeholder="Tarif">
-<button onclick="addCocktail()">Kokteyl ekle</button>
-
-<div id="cocktails"></div>
-
-<hr>
-
-<button onclick="exportData()">📥 Menüyü indir</button>
-<input type="file" onchange="importData(event)">
-
-<hr>
-
-<h2>📱 Misafir Menü</h2>
-<div id="menu"></div>
-
+  <div id="guestMode" class="hidden">
+    <div class="card">
+      <h2 style="text-align:center;color:#f4d06f;font-size:30px;margin-bottom:16px">Bugünkü Menü</h2>
+      <div id="guestMenu"></div>
+    </div>
+  </div>
 </div>
 
 <script>
-let data = JSON.parse(localStorage.getItem("menuData")||'{"drinks":[],"cocktails":[]}');
+function uid(){ return Math.random().toString(36).slice(2,10); }
 
-function save(){
- localStorage.setItem("menuData",JSON.stringify(data));
+const DEFAULT_DATA = {
+  spirits: [
+    { id: uid(), name: "Vodka", available: true },
+    { id: uid(), name: "Rom", available: true },
+    { id: uid(), name: "Cin", available: true },
+    { id: uid(), name: "Tekila", available: false },
+    { id: uid(), name: "Triple Sec", available: false },
+    { id: uid(), name: "Viski", available: true }
+  ],
+  cocktails: [
+    { id: uid(), name: "Mojito", spiritIds: [], recipe: "Rom ile hazırlanır, nane ve lime ile ferah servis edilir." },
+    { id: uid(), name: "Gin Tonic", spiritIds: [], recipe: "Cin ve tonik ile buzlu servis edilir." },
+    { id: uid(), name: "Margarita", spiritIds: [], recipe: "Tekila ve triple sec ile hazırlanır." },
+    { id: uid(), name: "Whiskey Sour", spiritIds: [], recipe: "Viski, limon ve şeker ile çalkalanır." },
+    { id: uid(), name: "Vodka Lemon", spiritIds: [], recipe: "Vodka, limon ve buz ile hazırlanır." }
+  ]
+};
+
+let data = loadData();
+
+function loadData(){
+  const raw = localStorage.getItem("cocktailMenuTransferV1");
+  if(!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
+  try { return JSON.parse(raw); }
+  catch { return JSON.parse(JSON.stringify(DEFAULT_DATA)); }
 }
 
-function addDrink(){
- const val=document.getElementById("drink").value;
- data.drinks.push({name:val,active:true});
- save(); render();
+function saveData(){
+  localStorage.setItem("cocktailMenuTransferV1", JSON.stringify(data));
+}
+
+function seedLinks(){
+  const byName = Object.fromEntries(data.spirits.map(s => [s.name, s.id]));
+  function setSpirits(cocktailName, names){
+    const c = data.cocktails.find(x => x.name === cocktailName);
+    if (c && (!c.spiritIds || c.spiritIds.length === 0)) {
+      c.spiritIds = names.map(n => byName[n]).filter(Boolean);
+    }
+  }
+  setSpirits("Mojito", ["Rom"]);
+  setSpirits("Gin Tonic", ["Cin"]);
+  setSpirits("Margarita", ["Tekila", "Triple Sec"]);
+  setSpirits("Whiskey Sour", ["Viski"]);
+  setSpirits("Vodka Lemon", ["Vodka"]);
+  saveData();
+}
+seedLinks();
+
+function showMode(mode){
+  document.getElementById("adminMode").classList.toggle("hidden", mode !== "admin");
+  document.getElementById("guestMode").classList.toggle("hidden", mode !== "guest");
+}
+
+function addSpirit(){
+  const input = document.getElementById("newSpiritName");
+  const name = input.value.trim();
+  if(!name) return alert("İçki adı gir.");
+  if(data.spirits.some(s => s.name.toLowerCase() === name.toLowerCase())) return alert("Bu içki zaten var.");
+  data.spirits.push({ id: uid(), name, available: true });
+  input.value = "";
+  saveData();
+  render();
+}
+
+function toggleSpirit(id){
+  const s = data.spirits.find(x => x.id === id);
+  if(!s) return;
+  s.available = !s.available;
+  saveData();
+  render();
+}
+
+function removeSpirit(id){
+  const spirit = data.spirits.find(s => s.id === id);
+  if(!spirit) return;
+  data.spirits = data.spirits.filter(s => s.id !== id);
+  data.cocktails.forEach(c => c.spiritIds = c.spiritIds.filter(x => x !== id));
+  saveData();
+  render();
 }
 
 function addCocktail(){
- const name=document.getElementById("cocktail").value;
- const recipe=document.getElementById("recipe").value;
- data.cocktails.push({name,recipe});
- save(); render();
+  const name = document.getElementById("cocktailName").value.trim();
+  const recipe = document.getElementById("cocktailRecipe").value.trim();
+  const spiritIds = Array.from(document.querySelectorAll(".check-spirit:checked")).map(x => x.value);
+  if(!name) return alert("Kokteyl adı gir.");
+  if(!spiritIds.length) return alert("En az 1 içki seç.");
+  if(data.cocktails.some(c => c.name.toLowerCase() === name.toLowerCase())) return alert("Bu kokteyl zaten var.");
+  data.cocktails.push({ id: uid(), name, spiritIds, recipe });
+  document.getElementById("cocktailName").value = "";
+  document.getElementById("cocktailRecipe").value = "";
+  saveData();
+  render();
+}
+
+function removeCocktail(id){
+  data.cocktails = data.cocktails.filter(c => c.id !== id);
+  saveData();
+  render();
+}
+
+function canMake(c){
+  return c.spiritIds.every(id => {
+    const s = data.spirits.find(x => x.id === id);
+    return s && s.available;
+  });
+}
+
+function spiritNames(ids){
+  return ids.map(id => {
+    const s = data.spirits.find(x => x.id === id);
+    return s ? s.name : null;
+  }).filter(Boolean);
+}
+
+function missingSpiritNames(ids){
+  return ids.map(id => data.spirits.find(s => s.id === id))
+    .filter(s => !s || !s.available)
+    .map(s => s ? s.name : "Silinmiş içki");
+}
+
+function renderSpirits(){
+  const root = document.getElementById("spiritList");
+  root.innerHTML = "";
+  data.spirits.forEach(s => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = '<div class="row" style="justify-content:space-between"><div><h3>'+s.name+'</h3><div class="'+(s.available?'ok':'off')+'">'+(s.available?'Şu an var':'Bitti / yok')+'</div></div><div class="row"><button class="'+(s.available?'secondary':'green')+'" onclick="toggleSpirit(\''+s.id+'\')">'+(s.available?'Bitti':'Geldi')+'</button><button class="red" onclick="removeSpirit(\''+s.id+'\')">Sil</button></div></div>';
+    root.appendChild(div);
+  });
+
+  const checklist = document.getElementById("spiritChecklist");
+  checklist.innerHTML = "";
+  data.spirits.forEach(s => {
+    const label = document.createElement("label");
+    label.className = "tag";
+    label.innerHTML = '<input class="check-spirit" type="checkbox" value="'+s.id+'"> '+s.name;
+    checklist.appendChild(label);
+  });
+}
+
+function renderAllCocktails(){
+  const root = document.getElementById("allCocktails");
+  root.innerHTML = "";
+  if(!data.cocktails.length){
+    root.innerHTML = '<div class="small">Henüz kokteyl eklenmedi.</div>';
+    return;
+  }
+  data.cocktails.forEach(c => {
+    const ok = canMake(c);
+    const missing = missingSpiritNames(c.spiritIds);
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = '<div class="row" style="justify-content:space-between"><div><h3>'+c.name+'</h3><div class="'+(ok?'ok':'off')+'">'+(ok?'Menüde görünür':'Menüde görünmez')+'</div></div><button class="red" onclick="removeCocktail(\''+c.id+'\')">Sil</button></div><div>'+spiritNames(c.spiritIds).map(n => '<span class="tag">'+n+'</span>').join('')+'</div>'+(c.recipe ? '<p>'+c.recipe+'</p>' : '')+(missing.length ? '<div class="small">Eksik içki: '+missing.join(', ')+'</div>' : '');
+    root.appendChild(div);
+  });
+}
+
+function renderGuestMenu(){
+  const root = document.getElementById("guestMenu");
+  const visible = data.cocktails.filter(canMake).sort((a,b) => a.name.localeCompare(b.name, "tr"));
+  root.innerHTML = "";
+  if(!visible.length){
+    root.innerHTML = '<div class="item"><h3>Şu an menü boş</h3></div>';
+    return;
+  }
+  visible.forEach(c => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = '<h3>'+c.name+'</h3><div>'+spiritNames(c.spiritIds).map(n => '<span class="tag">'+n+'</span>').join('')+'</div>'+(c.recipe ? '<p>'+c.recipe+'</p>' : '');
+    root.appendChild(div);
+  });
+}
+
+function prepareExport(){
+  const box = document.getElementById("transferBox");
+  box.value = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  box.select();
+}
+
+async function copyTransfer(){
+  const box = document.getElementById("transferBox");
+  if(!box.value.trim()) prepareExport();
+  try{
+    await navigator.clipboard.writeText(box.value);
+    alert("Veri kopyalandı.");
+  }catch(e){
+    box.select();
+    alert("Kopyalama otomatik olmadı. Kutudaki metni elle kopyala.");
+  }
+}
+
+function importTransfer(){
+  const box = document.getElementById("transferBox");
+  const raw = box.value.trim();
+  if(!raw) return alert("Yapıştırılacak veri yok.");
+  try{
+    const decoded = decodeURIComponent(escape(atob(raw)));
+    const incoming = JSON.parse(decoded);
+    if(!incoming.spirits || !incoming.cocktails) throw new Error("Geçersiz veri");
+    data = incoming;
+    saveData();
+    render();
+    alert("Menü yüklendi.");
+  }catch(e){
+    alert("Veri okunamadı. Kopyaladığın metni tam yapıştırdığından emin ol.");
+  }
 }
 
 function render(){
- const d=document.getElementById("drinks");
- d.innerHTML="";
- data.drinks.forEach(x=>{
-   d.innerHTML+=`<div class="card">${x.name}</div>`;
- });
-
- const c=document.getElementById("cocktails");
- c.innerHTML="";
- data.cocktails.forEach(x=>{
-   c.innerHTML+=`<div class="card">${x.name}</div>`;
- });
-
- const m=document.getElementById("menu");
- m.innerHTML="";
- data.cocktails.forEach(x=>{
-   m.innerHTML+=`<div class="card"><b>${x.name}</b><br>${x.recipe}</div>`;
- });
-}
-
-function exportData(){
- const blob = new Blob([JSON.stringify(data)], {type:"application/json"});
- const a = document.createElement("a");
- a.href = URL.createObjectURL(blob);
- a.download = "menu.json";
- a.click();
-}
-
-function importData(e){
- const file = e.target.files[0];
- const reader = new FileReader();
- reader.onload = function(){
-   data = JSON.parse(reader.result);
-   save();
-   render();
- };
- reader.readAsText(file);
+  saveData();
+  renderSpirits();
+  renderAllCocktails();
+  renderGuestMenu();
 }
 
 render();
 </script>
-
 </body>
 </html>
