@@ -38,8 +38,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 <div class="wrap">
   <div class="hero">
     <h1>🍸 Kokteyl Menü</h1>
-    <p>Bilgisayarda menüyü hazırlayıp QR oluşturabilir, telefonda okutulan veriyi yapıştırarak aynı menüyü açabilirsin.</p>
-    <div class="row">
+        <div class="row">
       <button class="primary" onclick="showMode('admin')">Admin</button>
       <button class="secondary" onclick="showMode('guest')">Misafir Menüsü</button>
     </div>
@@ -267,7 +266,7 @@ function renderGuestMenu(){
   visible.forEach(c => {
     const div = document.createElement("div");
     div.className = "item";
-    div.innerHTML = '<h3>'+c.name+'</h3><div>'+spiritNames(c.spiritIds).map(n => '<span class="tag">'+n+'</span>').join('')+'</div>'+(c.recipe ? '<p>'+c.recipe+'</p>' : '');
+    div.innerHTML = '<h3>'+c.name+'</h3><div>'+spiritNames(c.spiritIds).map(n => '<span class="tag">'+n+'</span>').join('')+'</div>';
     root.appendChild(div);
   });
 }
