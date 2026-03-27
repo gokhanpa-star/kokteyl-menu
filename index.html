@@ -1,509 +1,108 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Şık Kokteyl Menüsü</title>
-  <style>
-    :root{
-      --bg:#07111d;
-      --bg2:#0e1726;
-      --card:#111c2d;
-      --card2:#0c1625;
-      --line:#22324a;
-      --text:#f8fafc;
-      --muted:#9fb1c7;
-      --gold:#f4d06f;
-      --blue:#7dd3fc;
-      --green:#34d399;
-      --red:#f87171;
-      --pill:#122238;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(125,211,252,.12), transparent 25%),
-        linear-gradient(180deg,var(--bg),var(--bg2));
-      min-height:100vh;
-    }
-    .wrap{max-width:1180px;margin:0 auto;padding:18px}
-    .hero{
-      background:linear-gradient(135deg, rgba(244,208,111,.14), rgba(125,211,252,.10));
-      border:1px solid var(--line);
-      border-radius:26px;
-      padding:22px;
-      box-shadow:0 18px 40px rgba(0,0,0,.22);
-      margin-bottom:18px;
-    }
-    h1,h2,h3{margin:0}
-    .hero h1{font-size:34px;margin-bottom:8px}
-    .subtitle{color:var(--muted);line-height:1.5;max-width:850px}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    button,input,textarea{
-      font:inherit;
-    }
-    button{
-      border:none;
-      border-radius:14px;
-      padding:11px 15px;
-      font-weight:700;
-      cursor:pointer;
-      transition:.18s ease;
-    }
-    button:hover{transform:translateY(-1px)}
-    .btn-primary{background:var(--gold);color:#1c2431}
-    .btn-secondary{background:#18263c;color:var(--text);border:1px solid #30455f}
-    .btn-green{background:var(--green);color:#082519}
-    .btn-red{background:var(--red);color:#fff}
-    .grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:18px;
-    }
-    .card{
-      background:rgba(17,28,45,.97);
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:18px;
-      box-shadow:0 14px 30px rgba(0,0,0,.18);
-    }
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      margin-bottom:14px;
-    }
-    .small{font-size:12px;color:var(--muted)}
-    .row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .input, textarea{
-      width:100%;
-      background:#091321;
-      color:var(--text);
-      border:1px solid #31455f;
-      border-radius:14px;
-      padding:12px 14px;
-      outline:none;
-    }
-    textarea{min-height:90px;resize:vertical}
-    .chip-list{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-    .chip{
-      background:#0b1627;
-      border:1px solid #29405f;
-      border-radius:999px;
-      padding:8px 11px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-size:14px;
-    }
-    .stat-row{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-top:16px;
-    }
-    .stat{
-      background:var(--card2);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-    }
-    .stat .num{font-size:24px;font-weight:700;color:var(--gold)}
-    .list-card{
-      background:var(--card2);
-      border:1px solid #233754;
-      border-radius:18px;
-      padding:14px;
-      margin-bottom:12px;
-    }
-    .status{
-      font-size:13px;
-      font-weight:700;
-      margin-top:4px;
-    }
-    .ok{color:#86efac}
-    .off{color:#fca5a5}
-    .tag{
-      display:inline-block;
-      padding:5px 9px;
-      border-radius:999px;
-      background:var(--pill);
-      border:1px solid #2d4566;
-      color:#d8e5f5;
-      font-size:12px;
-      margin:4px 6px 0 0;
-    }
-    .menu-title{
-      text-align:center;
-      font-size:34px;
-      color:var(--gold);
-      margin:4px 0 20px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-    }
-    .menu-sub{
-      text-align:center;
-      color:var(--muted);
-      margin-bottom:18px;
-    }
-    .menu-card{
-      background:linear-gradient(180deg,#101b2e,#091220);
-      border:1px solid #2d4360;
-      border-radius:24px;
-      padding:20px;
-      margin-bottom:14px;
-      box-shadow:0 10px 24px rgba(0,0,0,.18);
-    }
-    .hidden{display:none}
-    .divider{height:1px;background:var(--line);margin:14px 0}
-    @media (max-width: 940px){
-      .grid{grid-template-columns:1fr}
-      .hero h1{font-size:28px}
-      .stat-row{grid-template-columns:1fr}
-      .menu-title{font-size:28px}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kokteyl Menü (Export/Import)</title>
+<style>
+body{font-family:Arial;background:#0f172a;color:#fff;margin:0;padding:20px}
+.container{max-width:800px;margin:auto}
+input,button{padding:10px;margin:5px;border-radius:8px;border:none}
+button{background:#38bdf8;color:#000;font-weight:bold}
+.card{background:#1e293b;padding:10px;margin:10px 0;border-radius:10px}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="hero">
-      <h1>🍸 Ev Tipi Kokteyl Menüsü</h1>
-      
+<div class="container">
 
-      <div class="toolbar">
-        <button class="btn-primary" onclick="showMode('admin')">Admin Görünümü</button>
-        <button class="btn-secondary" onclick="showMode('guest')">Misafir Menüsü</button>
-      </div>
+<h2>🍸 Admin Panel</h2>
 
-      <div class="stat-row">
-        <div class="stat">
-          <div class="small">Toplam İçki</div>
-          <div class="num" id="statSpirits">0</div>
-        </div>
-        <div class="stat">
-          <div class="small">Toplam Kokteyl</div>
-          <div class="num" id="statCocktails">0</div>
-        </div>
-        <div class="stat">
-          <div class="small">Bugün Menüde</div>
-          <div class="num" id="statVisible">0</div>
-        </div>
-      </div>
-    </div>
+<input id="drink" placeholder="İçki ekle">
+<button onclick="addDrink()">Ekle</button>
 
-    <div id="adminMode">
-      <div class="grid">
-        <div class="card">
-          <div class="section-head">
-            <h2>Elimdeki İçkiler</h2>
-            <div class="small">Var / yok olarak yönet</div>
-          </div>
+<div id="drinks"></div>
 
-          <div class="row">
-            <div style="flex:1 1 220px">
-              <input id="newSpiritName" class="input" placeholder="Yeni içki adı (örn. Aperol)" />
-            </div>
-            <div>
-              <button class="btn-green" onclick="addSpirit()">İçki Ekle</button>
-            </div>
-          </div>
+<hr>
 
-          <div class="divider"></div>
-          <div id="spiritList"></div>
-        </div>
+<input id="cocktail" placeholder="Kokteyl adı">
+<input id="recipe" placeholder="Tarif">
+<button onclick="addCocktail()">Kokteyl ekle</button>
 
-        <div class="card">
-          <div class="section-head">
-            <h2>Yeni Kokteyl Ekle</h2>
-            <div class="small">Gerekli içkileri seç</div>
-          </div>
+<div id="cocktails"></div>
 
-          <div class="row">
-            <div style="flex:1 1 220px">
-              <input id="cocktailName" class="input" placeholder="Kokteyl adı" />
-            </div>
-          </div>
+<hr>
 
-          <div style="margin-top:12px">
-            <div class="small">Kullanılan içkiler</div>
-            <div class="chip-list" id="spiritChecklist"></div>
-          </div>
+<button onclick="exportData()">📥 Menüyü indir</button>
+<input type="file" onchange="importData(event)">
 
-          <div style="margin-top:12px">
-            <textarea id="cocktailRecipe" placeholder="Kısa tarif veya servis notu"></textarea>
-          </div>
+<hr>
 
-          <div style="margin-top:12px">
-            <button class="btn-primary" onclick="addCocktail()">Kokteyl Ekle</button>
-          </div>
-        </div>
-      </div>
+<h2>📱 Misafir Menü</h2>
+<div id="menu"></div>
 
-      <div class="card" style="margin-top:18px">
-        <div class="section-head">
-          <h2>Kokteyl Veritabanı</h2>
-          <div class="small">Hangi kokteylin neden menüde göründüğünü burada görürsün</div>
-        </div>
-        <div id="allCocktails"></div>
-      </div>
-    </div>
+</div>
 
-    <div id="guestMode" class="hidden">
-      <div class="card">
-        <div class="menu-title">Bugünkü Menü</div>
-        
-        <div id="guestMenu"></div>
-      </div>
-    </div>
-  </div>
+<script>
+let data = JSON.parse(localStorage.getItem("menuData")||'{"drinks":[],"cocktails":[]}');
 
-  <script>
-    function uid(){ return Math.random().toString(36).slice(2,10); }
+function save(){
+ localStorage.setItem("menuData",JSON.stringify(data));
+}
 
-    const DEFAULT_DATA = {
-      spirits: [
-        { id: uid(), name: "Vodka", available: true },
-        { id: uid(), name: "Rom", available: true },
-        { id: uid(), name: "Cin", available: true },
-        { id: uid(), name: "Tekila", available: false },
-        { id: uid(), name: "Triple Sec", available: false },
-        { id: uid(), name: "Viski", available: true }
-      ],
-      cocktails: [
-        { id: uid(), name: "Mojito", spiritIds: [], recipe: "Rom ile hazırlanır, nane ve lime ile ferah servis edilir." },
-        { id: uid(), name: "Gin Tonic", spiritIds: [], recipe: "Cin ve tonik ile buzlu servis edilir." },
-        { id: uid(), name: "Margarita", spiritIds: [], recipe: "Tekila ve triple sec ile hazırlanır." },
-        { id: uid(), name: "Whiskey Sour", spiritIds: [], recipe: "Viski, limon ve şeker ile çalkalanır." },
-        { id: uid(), name: "Vodka Lemon", spiritIds: [], recipe: "Vodka, limon ve buz ile hazırlanır." }
-      ]
-    };
+function addDrink(){
+ const val=document.getElementById("drink").value;
+ data.drinks.push({name:val,active:true});
+ save(); render();
+}
 
-    let data = loadData();
+function addCocktail(){
+ const name=document.getElementById("cocktail").value;
+ const recipe=document.getElementById("recipe").value;
+ data.cocktails.push({name,recipe});
+ save(); render();
+}
 
-    function loadData(){
-      const raw = localStorage.getItem("cocktailMenuStyledV1");
-      if(!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
-      try { return JSON.parse(raw); }
-      catch { return JSON.parse(JSON.stringify(DEFAULT_DATA)); }
-    }
+function render(){
+ const d=document.getElementById("drinks");
+ d.innerHTML="";
+ data.drinks.forEach(x=>{
+   d.innerHTML+=`<div class="card">${x.name}</div>`;
+ });
 
-    function saveData(){
-      localStorage.setItem("cocktailMenuStyledV1", JSON.stringify(data));
-    }
+ const c=document.getElementById("cocktails");
+ c.innerHTML="";
+ data.cocktails.forEach(x=>{
+   c.innerHTML+=`<div class="card">${x.name}</div>`;
+ });
 
-    function seedLinks(){
-      const byName = Object.fromEntries(data.spirits.map(s => [s.name, s.id]));
-      const setSpirits = (cocktailName, names) => {
-        const c = data.cocktails.find(x => x.name === cocktailName);
-        if (c && (!c.spiritIds || c.spiritIds.length === 0)) {
-          c.spiritIds = names.map(n => byName[n]).filter(Boolean);
-        }
-      };
-      setSpirits("Mojito", ["Rom"]);
-      setSpirits("Gin Tonic", ["Cin"]);
-      setSpirits("Margarita", ["Tekila", "Triple Sec"]);
-      setSpirits("Whiskey Sour", ["Viski"]);
-      setSpirits("Vodka Lemon", ["Vodka"]);
-      saveData();
-    }
-    seedLinks();
+ const m=document.getElementById("menu");
+ m.innerHTML="";
+ data.cocktails.forEach(x=>{
+   m.innerHTML+=`<div class="card"><b>${x.name}</b><br>${x.recipe}</div>`;
+ });
+}
 
-    function showMode(mode){
-      document.getElementById("adminMode").classList.toggle("hidden", mode !== "admin");
-      document.getElementById("guestMode").classList.toggle("hidden", mode !== "guest");
-    }
+function exportData(){
+ const blob = new Blob([JSON.stringify(data)], {type:"application/json"});
+ const a = document.createElement("a");
+ a.href = URL.createObjectURL(blob);
+ a.download = "menu.json";
+ a.click();
+}
 
-    function addSpirit(){
-      const input = document.getElementById("newSpiritName");
-      const name = input.value.trim();
-      if(!name) return alert("İçki adı gir.");
-      if(data.spirits.some(s => s.name.toLowerCase() === name.toLowerCase())) return alert("Bu içki zaten var.");
-      data.spirits.push({ id: uid(), name, available: true });
-      input.value = "";
-      saveData();
-      render();
-    }
+function importData(e){
+ const file = e.target.files[0];
+ const reader = new FileReader();
+ reader.onload = function(){
+   data = JSON.parse(reader.result);
+   save();
+   render();
+ };
+ reader.readAsText(file);
+}
 
-    function toggleSpirit(id){
-      const s = data.spirits.find(x => x.id === id);
-      if(!s) return;
-      s.available = !s.available;
-      saveData();
-      render();
-    }
+render();
+</script>
 
-    function removeSpirit(id){
-      const spirit = data.spirits.find(s => s.id === id);
-      if(!spirit) return;
-      const used = data.cocktails.filter(c => c.spiritIds.includes(id)).map(c => c.name);
-      if(used.length){
-        const ok = confirm(`${spirit.name} şu kokteyllerde kullanılıyor: ${used.join(", ")}.\nSilmek istiyor musun?`);
-        if(!ok) return;
-      }
-      data.spirits = data.spirits.filter(s => s.id !== id);
-      data.cocktails.forEach(c => c.spiritIds = c.spiritIds.filter(x => x !== id));
-      saveData();
-      render();
-    }
-
-    function addCocktail(){
-      const name = document.getElementById("cocktailName").value.trim();
-      const recipe = document.getElementById("cocktailRecipe").value.trim();
-      const spiritIds = [...document.querySelectorAll(".check-spirit:checked")].map(x => x.value);
-
-      if(!name) return alert("Kokteyl adı gir.");
-      if(!spiritIds.length) return alert("En az 1 içki seç.");
-      if(data.cocktails.some(c => c.name.toLowerCase() === name.toLowerCase())) return alert("Bu kokteyl zaten var.");
-
-      data.cocktails.push({ id: uid(), name, spiritIds, recipe });
-      document.getElementById("cocktailName").value = "";
-      document.getElementById("cocktailRecipe").value = "";
-      saveData();
-      render();
-    }
-
-    function removeCocktail(id){
-      data.cocktails = data.cocktails.filter(c => c.id !== id);
-      saveData();
-      render();
-    }
-
-    function canMake(c){
-      return c.spiritIds.every(id => {
-        const s = data.spirits.find(x => x.id === id);
-        return s && s.available;
-      });
-    }
-
-    function spiritNames(ids){
-      return ids.map(id => data.spirits.find(s => s.id === id)?.name).filter(Boolean);
-    }
-
-    function missingSpiritNames(ids){
-      return ids.map(id => data.spirits.find(s => s.id === id))
-        .filter(s => !s || !s.available)
-        .map(s => s?.name || "Silinmiş içki");
-    }
-
-    function updateStats(){
-      const visible = data.cocktails.filter(canMake);
-      document.getElementById("statSpirits").textContent = data.spirits.length;
-      document.getElementById("statCocktails").textContent = data.cocktails.length;
-      document.getElementById("statVisible").textContent = visible.length;
-    }
-
-    function renderSpirits(){
-      const root = document.getElementById("spiritList");
-      root.innerHTML = "";
-      data.spirits.forEach(s => {
-        const div = document.createElement("div");
-        div.className = "list-card";
-        div.innerHTML = `
-          <div class="row" style="justify-content:space-between">
-            <div>
-              <h3>${s.name}</h3>
-              <div class="status ${s.available ? 'ok' : 'off'}">${s.available ? "Şu an var" : "Bitti / yok"}</div>
-            </div>
-            <div class="row">
-              <button class="${s.available ? 'btn-secondary' : 'btn-green'}" onclick="toggleSpirit('${s.id}')">${s.available ? "Bitti" : "Geldi"}</button>
-              <button class="btn-red" onclick="removeSpirit('${s.id}')">Sil</button>
-            </div>
-          </div>
-        `;
-        root.appendChild(div);
-      });
-
-      const checklist = document.getElementById("spiritChecklist");
-      checklist.innerHTML = "";
-      data.spirits.forEach(s => {
-        const label = document.createElement("label");
-        label.className = "chip";
-        label.innerHTML = `<input class="check-spirit" type="checkbox" value="${s.id}"> ${s.name}`;
-        checklist.appendChild(label);
-      });
-    }
-
-    function renderAllCocktails(){
-      const root = document.getElementById("allCocktails");
-      root.innerHTML = "";
-
-      if(!data.cocktails.length){
-        root.innerHTML = `<div class="small">Henüz kokteyl eklenmedi.</div>`;
-        return;
-      }
-
-      data.cocktails.forEach(c => {
-        const ok = canMake(c);
-        const missing = missingSpiritNames(c.spiritIds);
-        const div = document.createElement("div");
-        div.className = "list-card";
-        div.innerHTML = `
-          <div class="row" style="justify-content:space-between">
-            <div>
-              <h3>${c.name}</h3>
-              <div class="status ${ok ? 'ok' : 'off'}">${ok ? "Menüde görünür" : "Menüde görünmez"}</div>
-            </div>
-            <button class="btn-red" onclick="removeCocktail('${c.id}')">Sil</button>
-          </div>
-
-          <div style="margin-top:8px">
-            ${spiritNames(c.spiritIds).map(n => `<span class="tag">${n}</span>`).join("")}
-          </div>
-
-          ${c.recipe ? `<p style="margin:10px 0 0;color:var(--muted)">${c.recipe}</p>` : `<p class="small" style="margin-top:10px">Tarif girilmedi.</p>`}
-          ${missing.length ? `<div class="small" style="margin-top:8px">Eksik içki: ${missing.join(", ")}</div>` : ``}
-        `;
-        root.appendChild(div);
-      });
-    }
-
-    function renderGuestMenu(){
-      const root = document.getElementById("guestMenu");
-      const visible = data.cocktails.filter(canMake).sort((a,b) => a.name.localeCompare(b.name, "tr"));
-
-      root.innerHTML = "";
-      if(!visible.length){
-        root.innerHTML = `<div class="menu-card"><h3>Şu an menü boş</h3><div class="small">Yeni içki eklediğinde veya stok açtığında uygun kokteyller otomatik görünür.</div></div>`;
-        return;
-      }
-
-      visible.forEach(c => {
-        const div = document.createElement("div");
-        div.className = "menu-card";
-        div.innerHTML = `
-          <h3>${c.name}</h3>
-          <div style="margin-top:8px">
-            ${spiritNames(c.spiritIds).map(n => `<span class="tag">${n}</span>`).join("")}
-          </div>
-          ${c.recipe ? `<p style="margin-top:10px;color:var(--muted)">${c.recipe}</p>` : ``}
-        `;
-        root.appendChild(div);
-      });
-    }
-
-    function render(){
-      saveData();
-      updateStats();
-      renderSpirits();
-      renderAllCocktails();
-      renderGuestMenu();
-    }
-
-    render();
-  </script>
 </body>
 </html>
