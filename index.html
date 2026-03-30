@@ -7,7 +7,7 @@
 <style>
 :root{
   --bg:#08111d; --card:#101b2d; --line:#22324a; --text:#f8fafc; --muted:#9fb0c8;
-  --gold:#f4d06f; --green:#34d399; --red:#f87171; --blue:#7dd3fc; --pill:#102035;
+  --gold:#f4d06f; --green:#34d399; --red:#f87171; --blue:#7dd3fc; --pill:#102035; --warn:#f59e0b;
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#07101d,#0f172a);color:var(--text)}
@@ -26,8 +26,10 @@ button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:p
 .red{background:var(--red);color:#fff}
 .blue{background:var(--blue);color:#042236}
 .item{background:#0a1322;border:1px solid #22314b;border-radius:16px;padding:14px;margin-bottom:12px}
+.item.warn{border-color:#7c4a03; box-shadow: inset 0 0 0 1px rgba(245,158,11,.15)}
 .tag{display:inline-block;padding:5px 8px;border-radius:999px;background:var(--pill);border:1px solid #2c4261;margin:4px 6px 0 0;font-size:12px}
-.ok{color:#86efac;font-weight:700}.off{color:#fca5a5;font-weight:700}.hidden{display:none}
+.tag.warn{background:#2a1a05;border-color:#7c4a03;color:#fbbf24}
+.ok{color:#86efac;font-weight:700}.off{color:#fca5a5;font-weight:700}.warntext{color:#fbbf24;font-weight:700}.hidden{display:none}
 p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 .star{font-size:18px;color:var(--gold);margin-left:6px}
 .tools{display:grid;grid-template-columns:1fr 180px;gap:10px;margin-bottom:16px}
@@ -61,7 +63,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
       <div class="stat"><div class="small">Favori</div><div class="num" id="statFavorites">0</div></div>
     </div>
 
-    <div class="notice">Bu sürümde <b>Güncelle</b> butonu sadece <b>data.js</b> indirir. Günlük kullanımda sadece data.js dosyasını GitHub'da değiştirmen yeterlidir. index.html sabit kalır.</div>
+    <div class="notice">Bu sürümde adminde bozuk ID'li kokteyller de görünür. Misafir menüsünde sadece gerçekten hazırlanabilir kokteyller görünür. <b>Güncelle</b> butonu yalnızca <b>data.js</b> indirir.</div>
   </div>
 
   <div id="adminMode">
@@ -142,7 +144,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 (function(){
   function uid(){ return Math.random().toString(36).slice(2,10); }
 
-  var localKey = "tipsyDaisyWorkingCopyV2";
+  var localKey = "tipsyDaisyWorkingCopyV3";
   var baseline = window.APP_DATA || { spirits: [], cocktails: [] };
   var localCopy = null;
   try { localCopy = JSON.parse(localStorage.getItem(localKey) || "null"); } catch(e) { localCopy = null; }
@@ -173,6 +175,40 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     document.getElementById("adminHero").classList.toggle("hidden", !isAdmin);
     document.getElementById("adminMode").classList.toggle("hidden", !isAdmin);
     document.getElementById("guestMode").classList.toggle("hidden", isAdmin);
+  }
+
+  function getSpiritById(id){
+    return data.spirits.find(function(x){ return x.id === id; }) || null;
+  }
+
+  function getCocktailIssues(c){
+    var missingIds = [];
+    var unavailable = [];
+    c.spiritIds.forEach(function(id){
+      var s = getSpiritById(id);
+      if(!s){
+        missingIds.push(id);
+      } else if(!s.available){
+        unavailable.push(s.name);
+      }
+    });
+    return { missingIds: missingIds, unavailable: unavailable };
+  }
+
+  function canMake(c){
+    var issues = getCocktailIssues(c);
+    return issues.missingIds.length === 0 && issues.unavailable.length === 0;
+  }
+
+  function spiritNames(ids){
+    return ids.map(function(id){
+      var s = getSpiritById(id);
+      return s ? s.name : null;
+    }).filter(Boolean);
+  }
+
+  function escapeHtml(str){
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
 
   function setCocktailFormMode(){
@@ -208,7 +244,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   }
 
   function toggleSpirit(id){
-    var s = data.spirits.find(function(x){ return x.id === id; });
+    var s = getSpiritById(id);
     if(!s) return;
     s.available = !s.available;
     render();
@@ -216,7 +252,6 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 
   function removeSpirit(id){
     data.spirits = data.spirits.filter(function(s){ return s.id !== id; });
-    data.cocktails.forEach(function(c){ c.spiritIds = c.spiritIds.filter(function(x){ return x !== id; }); });
     render();
   }
 
@@ -272,24 +307,6 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     if(!c) return;
     c.favorite = !c.favorite;
     render();
-  }
-
-  function canMake(c){
-    return c.spiritIds.every(function(id){
-      var s = data.spirits.find(function(x){ return x.id === id; });
-      return s && s.available;
-    });
-  }
-
-  function spiritNames(ids){
-    return ids.map(function(id){
-      var s = data.spirits.find(function(x){ return x.id === id; });
-      return s ? s.name : null;
-    }).filter(Boolean);
-  }
-
-  function escapeHtml(str){
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
 
   function matchesGuestFilters(c){
@@ -350,16 +367,21 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     }
 
     data.cocktails.forEach(function(c){
+      var issues = getCocktailIssues(c);
       var ok = canMake(c);
+      var resolvedNames = spiritNames(c.spiritIds);
+      var missingTags = issues.missingIds.map(function(id){ return '<span class="tag warn">Eksik ID: ' + escapeHtml(id) + '</span>'; }).join('');
+      var unavailableTags = issues.unavailable.map(function(name){ return '<span class="tag warn">Yok: ' + escapeHtml(name) + '</span>'; }).join('');
       var div = document.createElement("div");
-      div.className = "item";
+      div.className = 'item' + (!ok ? ' warn' : '');
       div.innerHTML =
         '<div class="row" style="justify-content:space-between">' +
-        '<div><h3>' + escapeHtml(c.name) + (c.favorite ? '<span class="star">★</span>' : '') + '</h3><div class="' + (ok ? 'ok' : 'off') + '">' + (ok ? 'Menüde görünür' : 'Menüde görünmez') + '</div></div>' +
+        '<div><h3>' + escapeHtml(c.name) + (c.favorite ? '<span class="star">★</span>' : '') + '</h3><div class="' + (ok ? 'ok' : 'warntext') + '">' + (ok ? 'Menüde görünür' : 'Sorunlu kokteyl - kontrol et') + '</div></div>' +
         '<div class="row"><button class="secondary" type="button" data-edit-cocktail="' + c.id + '">Düzenle</button><button class="blue" type="button" data-favorite-cocktail="' + c.id + '">' + (c.favorite ? 'Favoriden Çıkar' : 'Favori Yap') + '</button><button class="red" type="button" data-remove-cocktail="' + c.id + '">Sil</button></div>' +
         '</div>' +
-        '<div>' + (c.category ? '<span class="tag">' + escapeHtml(c.category) + '</span>' : '') + spiritNames(c.spiritIds).map(function(n){ return '<span class="tag">' + escapeHtml(n) + '</span>'; }).join('') + '</div>' +
-        (c.recipe ? '<p>' + escapeHtml(c.recipe) + '</p>' : '');
+        '<div>' + (c.category ? '<span class="tag">' + escapeHtml(c.category) + '</span>' : '') + resolvedNames.map(function(n){ return '<span class="tag">' + escapeHtml(n) + '</span>'; }).join('') + missingTags + unavailableTags + '</div>' +
+        (c.recipe ? '<p>' + escapeHtml(c.recipe) + '</p>' : '') +
+        (!ok ? '<p class="small">Bu kokteyl adminde görünür. Misafir menüsünde görünmesi için eksik/bozuk içkileri düzelt.</p>' : '');
       root.appendChild(div);
     });
 
