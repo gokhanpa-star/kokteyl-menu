@@ -41,7 +41,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 <div class="wrap">
   <div class="hero">
     <h1>🍸 Kokteyl Menü</h1>
-    <div class="row">
+    <div id="topToolbar" class="row">
       <button id="btnAdmin" class="primary" type="button">Admin</button>
       <button id="btnGuest" class="secondary" type="button">Misafir Menüsü</button>
       <button id="btnExport" class="green" type="button">HTML İndir</button>
@@ -52,7 +52,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
       <div class="stat"><div class="small">Menüde Görünen</div><div class="num" id="statVisible">0</div></div>
       <div class="stat"><div class="small">Favori</div><div class="num" id="statFavorites">0</div></div>
     </div>
-    <p class="small" style="margin-top:12px">HTML İndir ile misafir menüsünü tek dosya indirip GitHub'a index.html olarak yükleyebilirsin.</p>
+    <p id="exportNote" class="small" style="margin-top:12px">HTML İndir ile misafir menüsünü tek dosya indirip GitHub'a index.html olarak yükleyebilirsin.</p>
   </div>
 
   <div id="adminMode">
@@ -177,8 +177,11 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   seedLinks();
 
   function showMode(mode){
-    document.getElementById("adminMode").classList.toggle("hidden", mode !== "admin");
-    document.getElementById("guestMode").classList.toggle("hidden", mode !== "guest");
+    const isAdmin = mode === "admin";
+    document.getElementById("adminMode").classList.toggle("hidden", !isAdmin);
+    document.getElementById("guestMode").classList.toggle("hidden", isAdmin);
+    document.getElementById("topToolbar").classList.toggle("hidden", !isAdmin);
+    document.getElementById("exportNote").classList.toggle("hidden", !isAdmin);
   }
 
   function addSpirit(){
@@ -422,6 +425,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   document.getElementById("searchInput").addEventListener("input", renderAllCocktails);
   document.getElementById("filterCategory").addEventListener("change", renderAllCocktails);
 
+  showMode('admin');
   render();
 })();
 </script>
