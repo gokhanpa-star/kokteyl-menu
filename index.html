@@ -422,8 +422,8 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   document.getElementById("btnExport").addEventListener("click", downloadGuestHtml);
   document.getElementById("btnAddSpirit").addEventListener("click", addSpirit);
   document.getElementById("btnAddCocktail").addEventListener("click", addCocktail);
-  document.getElementById("searchInput").addEventListener("input", renderAllCocktails);
-  document.getElementById("filterCategory").addEventListener("change", renderAllCocktails);
+  document.getElementById("searchInput").addEventListener("input", renderGuestMenu);
+  document.getElementById("filterCategory").addEventListener("change", renderGuestMenu);
 
   showMode('admin');
   render();
