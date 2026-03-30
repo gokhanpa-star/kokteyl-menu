@@ -73,6 +73,18 @@ window.APP_DATA = {
       "recipe": "Shot bardağına",
       "category": "Tatlı",
       "favorite": false
+    },
+    {
+      "id": "1003n1un",
+      "name": "Deneme",
+      "spiritIds": [
+        "sp_vodka",
+        "sp_rom",
+        "s8sjoea9"
+      ],
+      "recipe": "",
+      "category": "Sert",
+      "favorite": false
     }
   ]
 };
