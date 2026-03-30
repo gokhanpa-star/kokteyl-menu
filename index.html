@@ -477,19 +477,21 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   if(filterCategory) filterCategory.addEventListener("change", renderGuestMenu);
 
   const params = new URLSearchParams(window.location.search);
-  const isGuestQr = params.get("v") === "guest";
+  const isGuestQr = params.get("mode") === "guest" || params.get("v") === "guest";
+
+  render();
 
   if(isGuestQr){
     showMode("guest");
     var adminBtn = document.getElementById("btnAdmin");
+    var guestBtn = document.getElementById("btnGuest");
     var updateBtn = document.getElementById("btnUpdate");
     if(adminBtn) adminBtn.style.display = "none";
+    if(guestBtn) guestBtn.style.display = "none";
     if(updateBtn) updateBtn.style.display = "none";
   } else {
     showMode("admin");
   }
-
-  render();
 })();
 </script>
 </body>
