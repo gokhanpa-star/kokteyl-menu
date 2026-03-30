@@ -1,17 +1,53 @@
 window.APP_DATA = {
   "spirits": [
-    { "id": "sp_vodka", "name": "Vodka", "available": true },
-    { "id": "sp_rom", "name": "Rom", "available": true },
-    { "id": "sp_cin", "name": "Cin", "available": true },
-    { "id": "sp_tekila", "name": "Tekila", "available": false },
-    { "id": "sp_triplesec", "name": "Triple Sec", "available": false },
-    { "id": "sp_viski", "name": "Viski", "available": true }
+    {
+      "id": "sp_vodka",
+      "name": "Vodka",
+      "available": true
+    },
+    {
+      "id": "sp_rom",
+      "name": "Rom",
+      "available": true
+    },
+    {
+      "id": "sp_cin",
+      "name": "Cin",
+      "available": true
+    },
+    {
+      "id": "sp_tekila",
+      "name": "Tekila",
+      "available": false
+    },
+    {
+      "id": "sp_triplesec",
+      "name": "Triple Sec",
+      "available": true
+    },
+    {
+      "id": "sp_viski",
+      "name": "Viski",
+      "available": true
+    },
+    {
+      "id": "lchjxhhj",
+      "name": "Baileys",
+      "available": true
+    },
+    {
+      "id": "x1e4ixjj",
+      "name": "Kahlua",
+      "available": true
+    }
   ],
   "cocktails": [
     {
       "id": "ck_mojito",
       "name": "Mojito",
-      "spiritIds": ["sp_rom"],
+      "spiritIds": [
+        "sp_rom"
+      ],
       "recipe": "Rom ile hazırlanır, nane ve lime ile ferah servis edilir.",
       "category": "Ferah",
       "favorite": true
@@ -19,7 +55,9 @@ window.APP_DATA = {
     {
       "id": "ck_gintonic",
       "name": "Gin Tonic",
-      "spiritIds": ["sp_cin"],
+      "spiritIds": [
+        "sp_cin"
+      ],
       "recipe": "Cin ve tonik ile buzlu servis edilir.",
       "category": "Klasik",
       "favorite": false
@@ -27,7 +65,10 @@ window.APP_DATA = {
     {
       "id": "ck_margarita",
       "name": "Margarita",
-      "spiritIds": ["sp_tekila", "sp_triplesec"],
+      "spiritIds": [
+        "sp_tekila",
+        "sp_triplesec"
+      ],
       "recipe": "Tekila ve triple sec ile hazırlanır.",
       "category": "Ekşi",
       "favorite": false
@@ -35,7 +76,9 @@ window.APP_DATA = {
     {
       "id": "ck_whiskeysour",
       "name": "Whiskey Sour",
-      "spiritIds": ["sp_viski"],
+      "spiritIds": [
+        "sp_viski"
+      ],
       "recipe": "Viski, limon ve şeker ile çalkalanır.",
       "category": "Sert",
       "favorite": true
@@ -43,9 +86,23 @@ window.APP_DATA = {
     {
       "id": "ck_vodkalemon",
       "name": "Vodka Lemon",
-      "spiritIds": ["sp_vodka"],
+      "spiritIds": [
+        "sp_vodka"
+      ],
       "recipe": "Vodka, limon ve buz ile hazırlanır.",
       "category": "Ferah",
+      "favorite": false
+    },
+    {
+      "id": "cpz4yeot",
+      "name": "B52",
+      "spiritIds": [
+        "sp_triplesec",
+        "lchjxhhj",
+        "x1e4ixjj"
+      ],
+      "recipe": "Shot bardağına hazırla",
+      "category": "Tatlı",
       "favorite": false
     }
   ]
