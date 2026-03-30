@@ -81,7 +81,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
         <div style="height:12px"></div>
         <textarea id="cocktailRecipe" placeholder="Kısa tarif veya servis notu"></textarea>
         <div style="height:12px"></div>
-        <button id="btnAddCocktail" class="primary" type="button">Kokteyl Ekle</button>
+        <button id="btnAddCocktail" class="primary" type="button">Kokteyl Ekle</button> <button id="btnCancelEdit" class="secondary hidden" type="button">Düzenlemeyi İptal Et</button>
       </div>
     </div>
 
@@ -112,11 +112,51 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   </div>
 </div>
 
+<script>window.INDEX_TEMPLATE = "<!DOCTYPE html>\n<html lang=\"tr\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Kokteyl Men\u00fc</title>\n<style>\n:root{--bg:#08111d;--card:#101b2d;--line:#22324a;--text:#f8fafc;--muted:#9fb0c8;--gold:#f4d06f;--green:#34d399;--red:#f87171;--blue:#7dd3fc;--pill:#102035}\n*{box-sizing:border-box}\nbody{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#07101d,#0f172a);color:var(--text)}\n.wrap{max-width:1080px;margin:0 auto;padding:16px}\n.hero,.card{background:rgba(16,27,45,.96);border:1px solid var(--line);border-radius:20px;padding:16px}\n.hero{margin-bottom:16px}\n.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}\n.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}\ninput,textarea,button,select{font:inherit}\ninput,textarea,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #334155;background:#0a1322;color:var(--text)}\ntextarea{min-height:110px;resize:vertical}\nbutton{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}\n.primary{background:var(--gold);color:#192230}.secondary{background:#1a2840;color:var(--text);border:1px solid #334155}.green{background:var(--green);color:#052012}.red{background:var(--red);color:#fff}.blue{background:var(--blue);color:#042236}\n.item{background:#0a1322;border:1px solid #22314b;border-radius:16px;padding:14px;margin-bottom:12px}\n.tag{display:inline-block;padding:5px 8px;border-radius:999px;background:var(--pill);border:1px solid #2c4261;margin:4px 6px 0 0;font-size:12px}\n.ok{color:#86efac;font-weight:700}.off{color:#fca5a5;font-weight:700}.hidden{display:none}\np,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}\n.star{font-size:18px;color:var(--gold);margin-left:6px}\n.tools{display:grid;grid-template-columns:1fr 180px;gap:10px;margin-bottom:16px}\n.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}\n.stat{background:#0a1322;border:1px solid #22314b;border-radius:14px;padding:12px}.num{font-size:24px;font-weight:700;color:var(--gold)}\n@media(max-width:900px){.grid,.tools,.counts{grid-template-columns:1fr}}\n</style>\n</head>\n<body>\n<div class=\"wrap\">\n  <div class=\"hero\">\n    <h1>\ud83c\udf78 Kokteyl Men\u00fc</h1>\n    <div id=\"topToolbar\" class=\"row\">\n      <button id=\"btnAdmin\" class=\"primary\" type=\"button\">Admin</button>\n      <button id=\"btnGuest\" class=\"secondary\" type=\"button\">Misafir Men\u00fcs\u00fc</button>\n      <button id=\"btnUpdate\" class=\"green\" type=\"button\">G\u00fcncelle</button>\n    </div>\n    <div class=\"counts\">\n      <div class=\"stat\"><div class=\"small\">Toplam \u0130\u00e7ki</div><div class=\"num\" id=\"statSpirits\">0</div></div>\n      <div class=\"stat\"><div class=\"small\">Toplam Kokteyl</div><div class=\"num\" id=\"statCocktails\">0</div></div>\n      <div class=\"stat\"><div class=\"small\">Men\u00fcde G\u00f6r\u00fcnen</div><div class=\"num\" id=\"statVisible\">0</div></div>\n      <div class=\"stat\"><div class=\"small\">Favori</div><div class=\"num\" id=\"statFavorites\">0</div></div>\n    </div>\n    <p id=\"exportNote\" class=\"small\" style=\"margin-top:12px\">G\u00fcncelle butonu sana tam y\u00f6netim dosyas\u0131 olan index.html ve verilerin oldu\u011fu data.js dosyas\u0131n\u0131 indirir. \u0130kisini de GitHub'da mevcut dosyalar\u0131n yerine y\u00fckle.</p>\n  </div>\n\n  <div id=\"adminMode\">\n    <div class=\"grid\">\n      <div class=\"card\">\n        <h2>\u0130\u00e7kiler</h2>\n        <div class=\"row\">\n          <div style=\"flex:1\"><input id=\"newSpiritName\" placeholder=\"Yeni i\u00e7ki ad\u0131\"></div>\n          <div><button id=\"btnAddSpirit\" class=\"green\" type=\"button\">\u0130\u00e7ki Ekle</button></div>\n        </div>\n        <div style=\"height:12px\"></div>\n        <div id=\"spiritList\"></div>\n      </div>\n\n      <div class=\"card\">\n        <h2>Yeni Kokteyl</h2>\n        <div class=\"row\"><div style=\"flex:1\"><input id=\"cocktailName\" placeholder=\"Kokteyl ad\u0131\"></div></div>\n        <div style=\"height:12px\"></div>\n        <div class=\"row\">\n          <div style=\"flex:1\"><select id=\"cocktailCategory\">\n            <option value=\"\">Kategori se\u00e7</option>\n            <option>Ferah</option>\n            <option>Sert</option>\n            <option>Tatl\u0131</option>\n            <option>Ek\u015fi</option>\n            <option>Klasik</option>\n            <option>Meyvemsi</option>\n          </select></div>\n          <div><label class=\"tag\"><input id=\"cocktailFavorite\" type=\"checkbox\"> Favori</label></div>\n        </div>\n        <div style=\"height:12px\"></div>\n        <div class=\"small\">Gerekli i\u00e7kiler</div>\n        <div id=\"spiritChecklist\"></div>\n        <div style=\"height:12px\"></div>\n        <textarea id=\"cocktailRecipe\" placeholder=\"K\u0131sa tarif veya servis notu\"></textarea>\n        <div style=\"height:12px\"></div>\n        <button id=\"btnAddCocktail\" class=\"primary\" type=\"button\">Kokteyl Ekle</button>\n      </div>\n    </div>\n\n    <div class=\"card\" style=\"margin-top:16px\">\n      <h2>Kokteyl Veritaban\u0131</h2>\n      <div id=\"allCocktails\"></div>\n    </div>\n  </div>\n\n  <div id=\"guestMode\" class=\"hidden\">\n    <div class=\"card\">\n      <h2 style=\"text-align:center;color:#f4d06f;font-size:30px;margin-bottom:16px\">Bug\u00fcnk\u00fc Men\u00fc</h2>\n      <div class=\"tools\" style=\"margin-bottom:16px\">\n        <input id=\"searchInput\" placeholder=\"Kokteyl veya i\u00e7erik ara\">\n        <select id=\"filterCategory\">\n          <option value=\"\">T\u00fcm kategoriler</option>\n          <option>Ferah</option>\n          <option>Sert</option>\n          <option>Tatl\u0131</option>\n          <option>Ek\u015fi</option>\n          <option>Klasik</option>\n          <option>Meyvemsi</option>\n          <option>Favoriler</option>\n        </select>\n      </div>\n      <div id=\"guestMenu\"></div>\n    </div>\n  </div>\n</div>\n\n<script src=\"data.js\"></script>\n<script>\n(function(){\n  function uid(){ return Math.random().toString(36).slice(2,10); }\n  var data = window.APP_DATA || { spirits: [], cocktails: [] };
+  var editingCocktailId = null;\n\n  function normalizeData(){\n    if(!Array.isArray(data.spirits)) data.spirits = [];\n    if(!Array.isArray(data.cocktails)) data.cocktails = [];\n    data.spirits.forEach(function(s){\n      if(!s.id) s.id = uid();\n      if(typeof s.available !== \"boolean\") s.available = true;\n    });\n    data.cocktails.forEach(function(c){\n      if(!c.id) c.id = uid();\n      if(!Array.isArray(c.spiritIds)) c.spiritIds = [];\n      if(typeof c.favorite !== \"boolean\") c.favorite = false;\n      if(!c.category) c.category = \"\";\n    });\n  }\n  normalizeData();\n\n  function saveData(){ window.APP_DATA = data; }\n\n  function showMode(mode){\n    var isAdmin = mode === \"admin\";\n    document.getElementById(\"adminMode\").classList.toggle(\"hidden\", !isAdmin);\n    document.getElementById(\"guestMode\").classList.toggle(\"hidden\", isAdmin);\n    document.getElementById(\"topToolbar\").classList.toggle(\"hidden\", !isAdmin);\n    document.getElementById(\"exportNote\").classList.toggle(\"hidden\", !isAdmin);\n  }\n\n  function addSpirit(){\n    var input = document.getElementById(\"newSpiritName\");\n    var name = input.value.trim();\n    if(!name) return alert(\"\u0130\u00e7ki ad\u0131 gir.\");\n    if(data.spirits.some(function(s){ return s.name.toLowerCase() === name.toLowerCase(); })) return alert(\"Bu i\u00e7ki zaten var.\");\n    data.spirits.push({ id: uid(), name: name, available: true });\n    input.value = \"\";\n    render();\n  }\n\n  function toggleSpirit(id){\n    var s = data.spirits.find(function(x){ return x.id === id; });\n    if(!s) return;\n    s.available = !s.available;\n    render();\n  }\n\n  function removeSpirit(id){\n    data.spirits = data.spirits.filter(function(s){ return s.id !== id; });\n    data.cocktails.forEach(function(c){ c.spiritIds = c.spiritIds.filter(function(x){ return x !== id; }); });\n    render();\n  }\n\n  function setCocktailFormMode(){
+    var btn = document.getElementById("btnAddCocktail");
+    var cancelBtn = document.getElementById("btnCancelEdit");
+    if(editingCocktailId){
+      btn.textContent = "Değişiklikleri Kaydet";
+      cancelBtn.classList.remove("hidden");
+    } else {
+      btn.textContent = "Kokteyl Ekle";
+      cancelBtn.classList.add("hidden");
+    }
+  }
+
+  function resetCocktailForm(){
+    editingCocktailId = null;
+    document.getElementById("cocktailName").value = "";
+    document.getElementById("cocktailRecipe").value = "";
+    document.getElementById("cocktailCategory").value = "";
+    document.getElementById("cocktailFavorite").checked = false;
+    document.querySelectorAll(".check-spirit").forEach(function(el){ el.checked = false; });
+    setCocktailFormMode();
+  }
+
+  function startEditCocktail(id){
+    var c = data.cocktails.find(function(x){ return x.id === id; });
+    if(!c) return;
+    editingCocktailId = id;
+    document.getElementById("cocktailName").value = c.name || "";
+    document.getElementById("cocktailRecipe").value = c.recipe || "";
+    document.getElementById("cocktailCategory").value = c.category || "";
+    document.getElementById("cocktailFavorite").checked = !!c.favorite;
+    document.querySelectorAll(".check-spirit").forEach(function(el){
+      el.checked = c.spiritIds.indexOf(el.value) !== -1;
+    });
+    setCocktailFormMode();
+    window.scrollTo({top: 0, behavior: "smooth"});
+  }
+
+  function addCocktail(){\n    var name = document.getElementById(\"cocktailName\").value.trim();\n    var recipe = document.getElementById(\"cocktailRecipe\").value.trim();\n    var category = document.getElementById(\"cocktailCategory\").value;\n    var favorite = document.getElementById(\"cocktailFavorite\").checked;\n    var spiritIds = Array.from(document.querySelectorAll(\".check-spirit:checked\")).map(function(x){ return x.value; });\n    if(!name) return alert(\"Kokteyl ad\u0131 gir.\");\n    if(!spiritIds.length) return alert(\"En az 1 i\u00e7ki se\u00e7.\");\n    if(data.cocktails.some(function(c){ return c.name.toLowerCase() === name.toLowerCase(); })) return alert(\"Bu kokteyl zaten var.\");\n    data.cocktails.push({ id: uid(), name: name, spiritIds: spiritIds, recipe: recipe, category: category, favorite: favorite });\n    document.getElementById(\"cocktailName\").value = \"\";\n    document.getElementById(\"cocktailRecipe\").value = \"\";\n    document.getElementById(\"cocktailCategory\").value = \"\";\n    document.getElementById(\"cocktailFavorite\").checked = false;\n    render();\n  }\n\n  function removeCocktail(id){\n    data.cocktails = data.cocktails.filter(function(c){ return c.id !== id; });\n    render();\n  }\n\n  function toggleFavorite(id){\n    var c = data.cocktails.find(function(x){ return x.id === id; });\n    if(!c) return;\n    c.favorite = !c.favorite;\n    render();\n  }\n\n  function canMake(c){\n    return c.spiritIds.every(function(id){\n      var s = data.spirits.find(function(x){ return x.id === id; });\n      return s && s.available;\n    });\n  }\n\n  function spiritNames(ids){\n    return ids.map(function(id){\n      var s = data.spirits.find(function(x){ return x.id === id; });\n      return s ? s.name : null;\n    }).filter(Boolean);\n  }\n\n  function escapeHtml(str){\n    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,'&#39;');\n  }\n\n  function matchesGuestFilters(c){\n    var q = document.getElementById(\"searchInput\").value.trim().toLowerCase();\n    var category = document.getElementById(\"filterCategory\").value;\n    var haystack = [c.name, c.recipe, c.category].concat(spiritNames(c.spiritIds)).join(\" \").toLowerCase();\n    var searchOk = !q || haystack.indexOf(q) !== -1;\n    var categoryOk = !category || (category === \"Favoriler\" ? c.favorite : c.category === category);\n    return searchOk && categoryOk;\n  }\n\n  function updateStats(){\n    document.getElementById(\"statSpirits\").textContent = data.spirits.length;\n    document.getElementById(\"statCocktails\").textContent = data.cocktails.length;\n    document.getElementById(\"statVisible\").textContent = data.cocktails.filter(canMake).length;\n    document.getElementById(\"statFavorites\").textContent = data.cocktails.filter(function(c){ return c.favorite; }).length;\n  }\n\n  function renderSpirits(){\n    var root = document.getElementById(\"spiritList\");\n    root.innerHTML = \"\";\n    data.spirits.forEach(function(s){\n      var div = document.createElement(\"div\");\n      div.className = \"item\";\n      div.innerHTML = '<div class=\"row\" style=\"justify-content:space-between\"><div><h3>' + escapeHtml(s.name) + '</h3><div class=\"' + (s.available ? 'ok' : 'off') + '\">' + (s.available ? '\u015eu an var' : 'Bitti / yok') + '</div></div><div class=\"row\"><button class=\"' + (s.available ? 'secondary' : 'green') + '\" type=\"button\" data-toggle-spirit=\"' + s.id + '\">' + (s.available ? 'Bitti' : 'Geldi') + '</button><button class=\"red\" type=\"button\" data-remove-spirit=\"' + s.id + '\">Sil</button></div></div>';\n      root.appendChild(div);\n    });\n    root.querySelectorAll(\"[data-toggle-spirit]\").forEach(function(btn){ btn.addEventListener(\"click\", function(){ toggleSpirit(btn.getAttribute(\"data-toggle-spirit\")); }); });\n    root.querySelectorAll(\"[data-remove-spirit]\").forEach(function(btn){ btn.addEventListener(\"click\", function(){ removeSpirit(btn.getAttribute(\"data-remove-spirit\")); }); });\n\n    var checklist = document.getElementById(\"spiritChecklist\");\n    checklist.innerHTML = \"\";\n    data.spirits.forEach(function(s){\n      var label = document.createElement(\"label\");\n      label.className = \"tag\";\n      label.innerHTML = '<input class=\"check-spirit\" type=\"checkbox\" value=\"' + s.id + '\"> ' + escapeHtml(s.name);\n      checklist.appendChild(label);\n    });\n  }\n\n  function renderAllCocktails(){\n    var root = document.getElementById(\"allCocktails\");\n    root.innerHTML = \"\";\n    if(!data.cocktails.length){ root.innerHTML = '<div class=\"small\">Hen\u00fcz kokteyl eklenmedi.</div>'; return; }\n    data.cocktails.forEach(function(c){\n      var ok = canMake(c);\n      var div = document.createElement(\"div\");\n      div.className = \"item\";\n      div.innerHTML = '<div class=\"row\" style=\"justify-content:space-between\"><div><h3>' + escapeHtml(c.name) + (c.favorite ? '<span class=\"star\">\u2605</span>' : '') + '</h3><div class=\"' + (ok ? 'ok' : 'off') + '\">' + (ok ? 'Men\u00fcde g\u00f6r\u00fcn\u00fcr' : 'Men\u00fcde g\u00f6r\u00fcnmez') + '</div></div><div class=\"row\"><button class=\"blue\" type=\"button\" data-favorite-cocktail=\"' + c.id + '\">' + (c.favorite ? 'Favoriden \u00c7\u0131kar' : 'Favori Yap') + '</button><button class=\"red\" type=\"button\" data-remove-cocktail=\"' + c.id + '\">Sil</button></div></div><div>' + (c.category ? '<span class=\"tag\">' + escapeHtml(c.category) + '</span>' : '') + spiritNames(c.spiritIds).map(function(n){ return '<span class=\"tag\">' + escapeHtml(n) + '</span>'; }).join('') + '</div>' + (c.recipe ? '<p>' + escapeHtml(c.recipe) + '</p>' : '');\n      root.appendChild(div);\n    });\n    root.querySelectorAll(\"[data-remove-cocktail]\").forEach(function(btn){ btn.addEventListener(\"click\", function(){ removeCocktail(btn.getAttribute(\"data-remove-cocktail\")); }); });\n    root.querySelectorAll(\"[data-favorite-cocktail]\").forEach(function(btn){ btn.addEventListener(\"click\", function(){ toggleFavorite(btn.getAttribute(\"data-favorite-cocktail\")); }); });\n  }\n\n  function renderGuestMenu(){\n    var root = document.getElementById(\"guestMenu\");\n    var visible = data.cocktails.filter(function(c){ return canMake(c) && matchesGuestFilters(c); }).sort(function(a,b){\n      if(a.favorite !== b.favorite) return a.favorite ? -1 : 1;\n      return a.name.localeCompare(b.name, \"tr\");\n    });\n    root.innerHTML = \"\";\n    if(!visible.length){ root.innerHTML = '<div class=\"item\"><h3>Sonu\u00e7 bulunamad\u0131</h3></div>'; return; }\n    visible.forEach(function(c){\n      var div = document.createElement(\"div\");\n      div.className = \"item\";\n      div.innerHTML = '<h3>' + escapeHtml(c.name) + (c.favorite ? '<span class=\"star\">\u2605</span>' : '') + '</h3><div>' + (c.category ? '<span class=\"tag\">' + escapeHtml(c.category) + '</span>' : '') + spiritNames(c.spiritIds).map(function(n){ return '<span class=\"tag\">' + escapeHtml(n) + '</span>'; }).join('') + '</div>';\n      root.appendChild(div);\n    });\n  }\n\n  function buildDataJs(){ return \"window.APP_DATA = \" + JSON.stringify(data, null, 2) + \";\"; }\n\n  function downloadFile(name, content, mime){\n    var blob = new Blob([content], {type:mime});\n    var a = document.createElement(\"a\");\n    a.href = URL.createObjectURL(blob);\n    a.download = name;\n    document.body.appendChild(a);\n    a.click();\n    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);\n  }\n\n  function updateFiles(){\n    downloadFile(\"index.html\", window.INDEX_TEMPLATE, \"text/html;charset=utf-8\");\n    setTimeout(function(){ downloadFile(\"data.js\", buildDataJs(), \"application/javascript;charset=utf-8\"); }, 400);\n  }\n\n  function render(){\n    saveData();\n    updateStats();\n    renderSpirits();\n    renderAllCocktails();\n    renderGuestMenu();\n  }\n\n  document.getElementById(\"btnAdmin\").addEventListener(\"click\", function(){ showMode(\"admin\"); });\n  document.getElementById(\"btnGuest\").addEventListener(\"click\", function(){ showMode(\"guest\"); });\n  document.getElementById(\"btnUpdate\").addEventListener(\"click\", updateFiles);\n  document.getElementById(\"btnAddSpirit\").addEventListener(\"click\", addSpirit);\n  document.getElementById(\"btnAddCocktail\").addEventListener(\"click\", addCocktail);\n  document.getElementById(\"searchInput\").addEventListener(\"input\", renderGuestMenu);\n  document.getElementById(\"filterCategory\").addEventListener(\"change\", renderGuestMenu);\n\n  showMode(\"admin\");\n  render();\n})();\n</script>\n</body>\n</html>\n";</script>
 <script src="data.js"></script>
 <script>
 (function(){
   function uid(){ return Math.random().toString(36).slice(2,10); }
   var data = window.APP_DATA || { spirits: [], cocktails: [] };
+  var editingCocktailId = null;
 
   function normalizeData(){
     if(!Array.isArray(data.spirits)) data.spirits = [];
@@ -167,6 +207,43 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     render();
   }
 
+  function setCocktailFormMode(){
+    var btn = document.getElementById("btnAddCocktail");
+    var cancelBtn = document.getElementById("btnCancelEdit");
+    if(editingCocktailId){
+      btn.textContent = "Değişiklikleri Kaydet";
+      cancelBtn.classList.remove("hidden");
+    } else {
+      btn.textContent = "Kokteyl Ekle";
+      cancelBtn.classList.add("hidden");
+    }
+  }
+
+  function resetCocktailForm(){
+    editingCocktailId = null;
+    document.getElementById("cocktailName").value = "";
+    document.getElementById("cocktailRecipe").value = "";
+    document.getElementById("cocktailCategory").value = "";
+    document.getElementById("cocktailFavorite").checked = false;
+    document.querySelectorAll(".check-spirit").forEach(function(el){ el.checked = false; });
+    setCocktailFormMode();
+  }
+
+  function startEditCocktail(id){
+    var c = data.cocktails.find(function(x){ return x.id === id; });
+    if(!c) return;
+    editingCocktailId = id;
+    document.getElementById("cocktailName").value = c.name || "";
+    document.getElementById("cocktailRecipe").value = c.recipe || "";
+    document.getElementById("cocktailCategory").value = c.category || "";
+    document.getElementById("cocktailFavorite").checked = !!c.favorite;
+    document.querySelectorAll(".check-spirit").forEach(function(el){
+      el.checked = c.spiritIds.indexOf(el.value) !== -1;
+    });
+    setCocktailFormMode();
+    window.scrollTo({top: 0, behavior: "smooth"});
+  }
+
   function addCocktail(){
     var name = document.getElementById("cocktailName").value.trim();
     var recipe = document.getElementById("cocktailRecipe").value.trim();
@@ -175,12 +252,26 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     var spiritIds = Array.from(document.querySelectorAll(".check-spirit:checked")).map(function(x){ return x.value; });
     if(!name) return alert("Kokteyl adı gir.");
     if(!spiritIds.length) return alert("En az 1 içki seç.");
+
+    if(editingCocktailId){
+      var duplicate = data.cocktails.some(function(c){ return c.id !== editingCocktailId && c.name.toLowerCase() === name.toLowerCase(); });
+      if(duplicate) return alert("Bu isimde başka bir kokteyl zaten var.");
+
+      var c = data.cocktails.find(function(x){ return x.id === editingCocktailId; });
+      if(!c) return alert("Düzenlenecek kokteyl bulunamadı.");
+      c.name = name;
+      c.recipe = recipe;
+      c.category = category;
+      c.favorite = favorite;
+      c.spiritIds = spiritIds;
+      resetCocktailForm();
+      render();
+      return;
+    }
+
     if(data.cocktails.some(function(c){ return c.name.toLowerCase() === name.toLowerCase(); })) return alert("Bu kokteyl zaten var.");
     data.cocktails.push({ id: uid(), name: name, spiritIds: spiritIds, recipe: recipe, category: category, favorite: favorite });
-    document.getElementById("cocktailName").value = "";
-    document.getElementById("cocktailRecipe").value = "";
-    document.getElementById("cocktailCategory").value = "";
-    document.getElementById("cocktailFavorite").checked = false;
+    resetCocktailForm();
     render();
   }
 
@@ -260,11 +351,12 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
       var ok = canMake(c);
       var div = document.createElement("div");
       div.className = "item";
-      div.innerHTML = '<div class="row" style="justify-content:space-between"><div><h3>' + escapeHtml(c.name) + (c.favorite ? '<span class="star">★</span>' : '') + '</h3><div class="' + (ok ? 'ok' : 'off') + '">' + (ok ? 'Menüde görünür' : 'Menüde görünmez') + '</div></div><div class="row"><button class="blue" type="button" data-favorite-cocktail="' + c.id + '">' + (c.favorite ? 'Favoriden Çıkar' : 'Favori Yap') + '</button><button class="red" type="button" data-remove-cocktail="' + c.id + '">Sil</button></div></div><div>' + (c.category ? '<span class="tag">' + escapeHtml(c.category) + '</span>' : '') + spiritNames(c.spiritIds).map(function(n){ return '<span class="tag">' + escapeHtml(n) + '</span>'; }).join('') + '</div>' + (c.recipe ? '<p>' + escapeHtml(c.recipe) + '</p>' : '');
+      div.innerHTML = '<div class="row" style="justify-content:space-between"><div><h3>' + escapeHtml(c.name) + (c.favorite ? '<span class="star">★</span>' : '') + '</h3><div class="' + (ok ? 'ok' : 'off') + '">' + (ok ? 'Menüde görünür' : 'Menüde görünmez') + '</div></div><div class="row"><button class="secondary" type="button" data-edit-cocktail="' + c.id + '">Düzenle</button><button class="blue" type="button" data-favorite-cocktail="' + c.id + '">' + (c.favorite ? 'Favoriden Çıkar' : 'Favori Yap') + '</button><button class="red" type="button" data-remove-cocktail="' + c.id + '">Sil</button></div></div><div>' + (c.category ? '<span class="tag">' + escapeHtml(c.category) + '</span>' : '') + spiritNames(c.spiritIds).map(function(n){ return '<span class="tag">' + escapeHtml(n) + '</span>'; }).join('') + '</div>' + (c.recipe ? '<p>' + escapeHtml(c.recipe) + '</p>' : '');
       root.appendChild(div);
     });
     root.querySelectorAll("[data-remove-cocktail]").forEach(function(btn){ btn.addEventListener("click", function(){ removeCocktail(btn.getAttribute("data-remove-cocktail")); }); });
     root.querySelectorAll("[data-favorite-cocktail]").forEach(function(btn){ btn.addEventListener("click", function(){ toggleFavorite(btn.getAttribute("data-favorite-cocktail")); }); });
+    root.querySelectorAll("[data-edit-cocktail]").forEach(function(btn){ btn.addEventListener("click", function(){ startEditCocktail(btn.getAttribute("data-edit-cocktail")); }); });
   }
 
   function renderGuestMenu(){
@@ -283,9 +375,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     });
   }
 
-  function buildDataJs(){
-    return "window.APP_DATA = " + JSON.stringify(data, null, 2) + ";";
-  }
+  function buildDataJs(){ return "window.APP_DATA = " + JSON.stringify(data, null, 2) + ";"; }
 
   function downloadFile(name, content, mime){
     var blob = new Blob([content], {type:mime});
@@ -297,23 +387,8 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
 
-  function currentHtmlWithFreshData(){
-    var clone = document.documentElement.cloneNode(true);
-    var oldDataScript = clone.querySelector('script[src="data.js"]');
-    if(oldDataScript) oldDataScript.remove();
-    var scripts = clone.querySelectorAll("script");
-    var dataScript = document.createElement("script");
-    dataScript.textContent = buildDataJs();
-    if(scripts.length){
-      clone.body.insertBefore(dataScript, scripts[0]);
-    } else {
-      clone.body.appendChild(dataScript);
-    }
-    return "<!DOCTYPE html>\n" + clone.outerHTML;
-  }
-
   function updateFiles(){
-    downloadFile("index.html", currentHtmlWithFreshData(), "text/html;charset=utf-8");
+    downloadFile("index.html", window.INDEX_TEMPLATE, "text/html;charset=utf-8");
     setTimeout(function(){ downloadFile("data.js", buildDataJs(), "application/javascript;charset=utf-8"); }, 400);
   }
 
@@ -330,10 +405,12 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   document.getElementById("btnUpdate").addEventListener("click", updateFiles);
   document.getElementById("btnAddSpirit").addEventListener("click", addSpirit);
   document.getElementById("btnAddCocktail").addEventListener("click", addCocktail);
+  document.getElementById("btnCancelEdit").addEventListener("click", resetCocktailForm);
   document.getElementById("searchInput").addEventListener("input", renderGuestMenu);
   document.getElementById("filterCategory").addEventListener("change", renderGuestMenu);
 
   showMode("admin");
+  setCocktailFormMode();
   render();
 })();
 </script>
