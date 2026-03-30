@@ -50,6 +50,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     <div class="row">
       <button id="btnAdmin" class="primary" type="button">Admin</button>
       <button id="btnGuest" class="secondary" type="button">Misafir Menüsü</button>
+      <button id="btnUpdate" class="green" type="button">Güncelle</button>
     </div>
 
     <div class="counts">
@@ -129,9 +130,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 
       <div id="guestMenu"></div>
 
-      <div class="row" style="margin-top:16px;justify-content:center">
-        <button id="btnBackAdmin" class="secondary" type="button">Admin'e Dön</button>
-      </div>
+      
     </div>
   </div>
 
@@ -392,6 +391,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   document.getElementById("btnGuest").addEventListener("click", function(){ showMode("guest"); });
   document.getElementById("btnBackAdmin").addEventListener("click", function(){ showMode("admin"); });
   document.getElementById("btnAddSpirit").addEventListener("click", addSpirit);
+  document.getElementById("btnUpdate").addEventListener("click", function(){ alert("Dosyaları güncellemek için data.js ve index.html’i tekrar yükleyin"); });
   document.getElementById("btnAddCocktail").addEventListener("click", addCocktail);
   document.getElementById("btnCancelEdit").addEventListener("click", resetCocktailForm);
   document.getElementById("searchInput").addEventListener("input", renderGuestMenu);
