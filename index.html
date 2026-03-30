@@ -44,7 +44,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     <div id="topToolbar" class="row">
       <button id="btnAdmin" class="primary" type="button">Admin</button>
       <button id="btnGuest" class="secondary" type="button">Misafir Menüsü</button>
-      <button id="btnUpdateZip" class="green" type="button">Güncelle</button>
+      <button id="btnUpdate" class="green" type="button">Güncelle</button>
     </div>
     <div class="counts">
       <div class="stat"><div class="small">Toplam İçki</div><div class="num" id="statSpirits">0</div></div>
@@ -52,7 +52,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
       <div class="stat"><div class="small">Menüde Görünen</div><div class="num" id="statVisible">0</div></div>
       <div class="stat"><div class="small">Favori</div><div class="num" id="statFavorites">0</div></div>
     </div>
-    <p id="exportNote" class="small" style="margin-top:12px">Güncelle butonu sana index.html ve data.js dosyalarını tek bir zip içinde indirir. Zipi açıp GitHub'da bu iki dosyayı manuel güncellemen yeterlidir.</p>
+    <p id="exportNote" class="small" style="margin-top:12px">Güncelle butonu index.html ve data.js dosyalarını arka arkaya indirir. Sonra GitHub'da bu iki dosyayı mevcut dosyaların yerine yükle.</p>
   </div>
 
   <div id="adminMode">
@@ -120,49 +120,31 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="data.js"></script>
 <script>
 (function(){
   function uid(){ return Math.random().toString(36).slice(2,10); }
-
   let data = window.APP_DATA || { spirits: [], cocktails: [] };
 
   function normalizeData(){
     if(!Array.isArray(data.spirits)) data.spirits = [];
     if(!Array.isArray(data.cocktails)) data.cocktails = [];
-
     const byName = {};
     data.spirits.forEach(function(s){
       if(!s.id) s.id = uid();
       if(typeof s.available !== "boolean") s.available = true;
       byName[s.name] = s.id;
     });
-
-    const seedMap = {
-      "Mojito": ["Rom"],
-      "Gin Tonic": ["Cin"],
-      "Margarita": ["Tekila", "Triple Sec"],
-      "Whiskey Sour": ["Viski"],
-      "Vodka Lemon": ["Vodka"]
-    };
-
     data.cocktails.forEach(function(c){
       if(!c.id) c.id = uid();
       if(!Array.isArray(c.spiritIds)) c.spiritIds = [];
       if(typeof c.favorite !== "boolean") c.favorite = false;
       if(!c.category) c.category = "";
-      if(!c.spiritIds.length && seedMap[c.name]){
-        c.spiritIds = seedMap[c.name].map(function(n){ return byName[n]; }).filter(Boolean);
-      }
     });
   }
-
   normalizeData();
 
-  function saveData(){
-    window.APP_DATA = data;
-  }
+  function saveData(){ window.APP_DATA = data; }
 
   function showMode(mode){
     const isAdmin = mode === "admin";
@@ -250,10 +232,8 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   }
 
   function matchesGuestFilters(c){
-    const searchEl = document.getElementById("searchInput");
-    const filterEl = document.getElementById("filterCategory");
-    const q = searchEl ? searchEl.value.trim().toLowerCase() : "";
-    const category = filterEl ? filterEl.value : "";
+    const q = document.getElementById("searchInput").value.trim().toLowerCase();
+    const category = document.getElementById("filterCategory").value;
     const haystack = [c.name, c.recipe, c.category].concat(spiritNames(c.spiritIds)).join(" ").toLowerCase();
     const searchOk = !q || haystack.indexOf(q) !== -1;
     const categoryOk = !category || (category === "Favoriler" ? c.favorite : c.category === category);
@@ -283,7 +263,6 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
         '</div>';
       root.appendChild(div);
     });
-
     root.querySelectorAll("[data-toggle-spirit]").forEach(function(btn){
       btn.addEventListener("click", function(){ toggleSpirit(btn.getAttribute("data-toggle-spirit")); });
     });
@@ -327,7 +306,6 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
         (c.recipe ? '<p>' + escapeHtml(c.recipe) + '</p>' : '');
       root.appendChild(div);
     });
-
     root.querySelectorAll("[data-remove-cocktail]").forEach(function(btn){
       btn.addEventListener("click", function(){ removeCocktail(btn.getAttribute("data-remove-cocktail")); });
     });
@@ -342,13 +320,11 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
       if(a.favorite !== b.favorite) return a.favorite ? -1 : 1;
       return a.name.localeCompare(b.name, "tr");
     });
-
     root.innerHTML = "";
     if(!visible.length){
       root.innerHTML = '<div class="item"><h3>Sonuç bulunamadı</h3></div>';
       return;
     }
-
     visible.forEach(function(c){
       const div = document.createElement("div");
       div.className = "item";
@@ -367,7 +343,6 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
       if(a.favorite !== b.favorite) return a.favorite ? -1 : 1;
       return a.name.localeCompare(b.name, "tr");
     });
-
     const cards = visible.length
       ? visible.map(function(c){
           return '<div class="item"><h3>' + escapeHtml(c.name) + (c.favorite ? ' ★' : '') + '</h3><div>' +
@@ -376,7 +351,6 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
             '</div></div>';
         }).join("")
       : '<div class="item"><h3>Şu an menü boş</h3></div>';
-
     return '<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bugünkü Menü</title><style>:root{--bg:#08111d;--card:#101b2d;--line:#22324a;--text:#f8fafc;--gold:#f4d06f}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#07101d,#0f172a);color:var(--text)}.wrap{max-width:760px;margin:0 auto;padding:16px}.card{background:rgba(16,27,45,.96);border:1px solid var(--line);border-radius:20px;padding:16px}.item{background:#0a1322;border:1px solid #22314b;border-radius:16px;padding:14px;margin-bottom:12px}.tag{display:inline-block;padding:5px 8px;border-radius:999px;background:#102035;border:1px solid #2c4261;margin:4px 6px 0 0;font-size:12px}h1,h3{margin:0 0 8px}</style></head><body><div class="wrap"><div class="card"><h1 style="text-align:center;color:#f4d06f;font-size:30px;margin-bottom:16px">Bugünkü Menü</h1>' + cards + '</div></div></body></html>';
   }
 
@@ -384,21 +358,24 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
     return "window.APP_DATA = " + JSON.stringify(data, null, 2) + ";";
   }
 
-  async function downloadUpdateZip(){
-    const zip = new JSZip();
-    zip.file("index.html", document.documentElement.outerHTML.replace(/<script src=\"data\.js\"><\/script>/, '<script src="data.js"></script>').replace(/<script src=\"https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/jszip\/3\.10\.1\/jszip\.min\.js\"><\/script>\n?/, ''));
-    zip.file("data.js", buildDataJs());
-    zip.file("README.txt", "Bu pakette iki dosya var:\n- index.html\n- data.js\n\nGitHub repo'nda bu iki dosyayi mevcut dosyalarin yerine yukle.");
-    const blob = await zip.generateAsync({type:"blob"});
+  function downloadTextFile(filename, content, mime){
+    const blob = new Blob([content], {type: mime});
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "kokteyl-menu-guncel.zip";
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     setTimeout(function(){
       URL.revokeObjectURL(a.href);
       a.remove();
     }, 1000);
+  }
+
+  function updateFiles(){
+    downloadTextFile("index.html", buildGuestHtml(), "text/html;charset=utf-8");
+    setTimeout(function(){
+      downloadTextFile("data.js", buildDataJs(), "application/javascript;charset=utf-8");
+    }, 400);
   }
 
   function render(){
@@ -411,7 +388,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 
   document.getElementById("btnAdmin").addEventListener("click", function(){ showMode("admin"); });
   document.getElementById("btnGuest").addEventListener("click", function(){ showMode("guest"); });
-  document.getElementById("btnUpdateZip").addEventListener("click", downloadUpdateZip);
+  document.getElementById("btnUpdate").addEventListener("click", updateFiles);
   document.getElementById("btnAddSpirit").addEventListener("click", addSpirit);
   document.getElementById("btnAddCocktail").addEventListener("click", addCocktail);
   document.getElementById("searchInput").addEventListener("input", renderGuestMenu);
