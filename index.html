@@ -476,7 +476,19 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   var filterCategory = document.getElementById("filterCategory");
   if(filterCategory) filterCategory.addEventListener("change", renderGuestMenu);
 
-  showMode("admin");
+  const params = new URLSearchParams(window.location.search);
+  const isGuestQr = params.get("v") === "guest";
+
+  if(isGuestQr){
+    showMode("guest");
+    var adminBtn = document.getElementById("btnAdmin");
+    var updateBtn = document.getElementById("btnUpdate");
+    if(adminBtn) adminBtn.style.display = "none";
+    if(updateBtn) updateBtn.style.display = "none";
+  } else {
+    showMode("admin");
+  }
+
   render();
 })();
 </script>
