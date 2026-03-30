@@ -95,7 +95,14 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 
     <div class="card" style="margin-top:16px">
       <h2>Kokteyl Veritabanı</h2>
-      <div class="tools">
+      <div id="allCocktails"></div>
+    </div>
+  </div>
+
+  <div id="guestMode" class="hidden">
+    <div class="card">
+      <h2 style="text-align:center;color:#f4d06f;font-size:30px;margin-bottom:16px">Bugünkü Menü</h2>
+      <div class="tools" style="margin-bottom:16px">
         <input id="searchInput" placeholder="Kokteyl veya içerik ara">
         <select id="filterCategory">
           <option value="">Tüm kategoriler</option>
@@ -108,13 +115,6 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
           <option>Favoriler</option>
         </select>
       </div>
-      <div id="allCocktails"></div>
-    </div>
-  </div>
-
-  <div id="guestMode" class="hidden">
-    <div class="card">
-      <h2 style="text-align:center;color:#f4d06f;font-size:30px;margin-bottom:16px">Bugünkü Menü</h2>
       <div id="guestMenu"></div>
     </div>
   </div>
@@ -316,10 +316,10 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
   function renderAllCocktails(){
     const root = document.getElementById("allCocktails");
     root.innerHTML = "";
-    const filtered = data.cocktails.filter(matchesFilters);
+    const filtered = data.cocktails;
 
     if(!filtered.length){
-      root.innerHTML = '<div class="small">Filtreye uyan kokteyl bulunamadı.</div>';
+      root.innerHTML = '<div class="small">Henüz kokteyl eklenmedi.</div>';
       return;
     }
 
@@ -353,14 +353,14 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 
   function renderGuestMenu(){
     const root = document.getElementById("guestMenu");
-    const visible = data.cocktails.filter(canMake).sort(function(a,b){
+    const visible = data.cocktails.filter(function(c){ return canMake(c) && matchesFilters(c); }).sort(function(a,b){
       if(a.favorite !== b.favorite) return a.favorite ? -1 : 1;
       return a.name.localeCompare(b.name, "tr");
     });
 
     root.innerHTML = "";
     if(!visible.length){
-      root.innerHTML = '<div class="item"><h3>Şu an menü boş</h3></div>';
+      root.innerHTML = '<div class="item"><h3>Sonuç bulunamadı</h3></div>';
       return;
     }
 
