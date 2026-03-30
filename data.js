@@ -18,7 +18,7 @@ window.APP_DATA = {
     {
       "id": "sp_tekila",
       "name": "Tekila",
-      "available": false
+      "available": true
     },
     {
       "id": "sp_triplesec",
@@ -38,6 +38,11 @@ window.APP_DATA = {
     {
       "id": "x1e4ixjj",
       "name": "Kahlua",
+      "available": true
+    },
+    {
+      "id": "dc91lutt",
+      "name": "Jack Daniels Elmalı",
       "available": true
     }
   ],
@@ -103,6 +108,18 @@ window.APP_DATA = {
       ],
       "recipe": "Shot bardağına hazırla",
       "category": "Tatlı",
+      "favorite": false
+    },
+    {
+      "id": "um9cr4bj",
+      "name": "deneme",
+      "spiritIds": [
+        "sp_vodka",
+        "sp_cin",
+        "lchjxhhj"
+      ],
+      "recipe": "",
+      "category": "Ferah",
       "favorite": false
     }
   ]
