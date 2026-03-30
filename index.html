@@ -32,7 +32,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>🍸 Kokteyl Menü</h1>
+    <div style="text-align:center;margin-bottom:10px"><img src="logo.png" style="width:150px;max-width:80%;margin-bottom:10px;"><h1 style="margin:0">🍸 Tipsy Daisy</h1></div>
     <div id="topToolbar" class="row">
       <button id="btnAdmin" class="primary" type="button">Admin</button>
       <button id="btnGuest" class="secondary" type="button">Misafir Menüsü</button>
@@ -44,7 +44,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
       <div class="stat"><div class="small">Menüde Görünen</div><div class="num" id="statVisible">0</div></div>
       <div class="stat"><div class="small">Favori</div><div class="num" id="statFavorites">0</div></div>
     </div>
-    <p id="exportNote" class="small" style="margin-top:12px">Güncelle butonu sana tam yönetim dosyası olan index.html ve verilerin olduğu data.js dosyasını indirir. İkisini de GitHub'da mevcut dosyaların yerine yükle.</p>
+    <p id="exportNote" class="small" style="margin-top:12px">Güncelle butonu sana Tipsy Daisy'nin tam yönetim dosyası olan index.html ve verilerin olduğu data.js dosyasını indirir. İkisini de GitHub'da mevcut dosyaların yerine yükle.</p>
   </div>
 
   <div id="adminMode">
@@ -93,7 +93,7 @@ p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}
 
   <div id="guestMode" class="hidden">
     <div class="card">
-      <h2 style="text-align:center;color:#f4d06f;font-size:30px;margin-bottom:16px">Bugünkü Menü</h2>
+      <div style="text-align:center;margin-bottom:16px"><img src="logo.png" style="width:120px;max-width:70%;margin-bottom:8px;"><h2 style="color:#f4d06f;font-size:30px;margin:0">Bugünkü Menü</h2></div>
       <div class="tools" style="margin-bottom:16px">
         <input id="searchInput" placeholder="Kokteyl veya içerik ara">
         <select id="filterCategory">
