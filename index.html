@@ -6,18 +6,53 @@
 <title>Tipsy Daisy</title>
 <style>
 :root{--bg:#08111d;--card:#101b2d;--line:#22324a;--text:#f8fafc;--muted:#9fb0c8;--gold:#f4d06f;--green:#34d399;--red:#f87171;--blue:#7dd3fc;--pill:#102035}
-*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#07101d,#0f172a);color:var(--text)}
-.wrap{max-width:1180px;margin:0 auto;padding:16px}.hero,.card{background:rgba(16,27,45,.96);border:1px solid var(--line);border-radius:20px;padding:16px}.hero{margin-bottom:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.stack>*+*{margin-top:12px}
-input,textarea,button,select{font:inherit} input,textarea,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #334155;background:#0a1322;color:var(--text)} textarea{min-height:90px;resize:vertical}
-button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}.primary{background:var(--gold);color:#192230}.secondary{background:#1a2840;color:var(--text);border:1px solid #334155}.green{background:var(--green);color:#052012}.red{background:var(--red);color:#fff}.blue{background:var(--blue);color:#042236}
-.item{background:#0a1322;border:1px solid #22314b;border-radius:16px;padding:14px;margin-bottom:12px}.tag{display:inline-block;padding:5px 8px;border-radius:999px;background:var(--pill);border:1px solid #2c4261;margin:4px 6px 0 0;font-size:12px}
-.ok{color:#86efac;font-weight:700}.off{color:#fca5a5;font-weight:700}.hidden{display:none!important} p,.small{color:var(--muted)} h1,h2,h3{margin:0 0 8px}.star{font-size:18px;color:var(--gold);margin-left:6px}
-.menu-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.menu-tab{text-align:center;padding:12px 8px;border-radius:14px;background:#0a1322;border:1px solid #22314b;cursor:pointer;font-weight:700}.menu-tab.active{background:rgba(244,208,111,.18);border-color:#9a7b22;color:#f4d06f}
-.toolbar-grid{display:grid;grid-template-columns:1fr 220px;gap:10px}.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.stat{background:#0a1322;border:1px solid #22314b;border-radius:14px;padding:12px}.num{font-size:24px;font-weight:700;color:var(--gold)}
-.brand{text-align:center}.brand img{width:320px;max-width:90%;display:block;margin:0 auto 10px auto;filter:drop-shadow(0 0 16px rgba(244,208,111,.35))}.notice{margin-top:12px;padding:10px 12px;border-radius:12px;background:#0a1322;border:1px solid #22314b;color:var(--muted)}
-@media(max-width:900px){.grid,.grid3,.counts,.toolbar-grid{grid-template-columns:1fr}.menu-tabs{grid-template-columns:1fr 1fr}.brand img{width:260px}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#07101d,#0f172a);color:var(--text)}
+.wrap{max-width:1200px;margin:0 auto;padding:16px}
+.hero,.card{background:rgba(16,27,45,.96);border:1px solid var(--line);border-radius:20px;padding:16px}
+.hero{margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stack>*+*{margin-top:12px}
+input,textarea,button,select{font:inherit}
+input,textarea,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #334155;background:#0a1322;color:var(--text)}
+textarea{min-height:90px;resize:vertical}
+button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+.primary{background:var(--gold);color:#192230}
+.secondary{background:#1a2840;color:var(--text);border:1px solid #334155}
+.green{background:var(--green);color:#052012}
+.red{background:var(--red);color:#fff}
+.blue{background:var(--blue);color:#042236}
+.item{background:#0a1322;border:1px solid #22314b;border-radius:16px;padding:14px;margin-bottom:12px}
+.item.warn{border-color:#7c4a03}
+.tag{display:inline-block;padding:5px 8px;border-radius:999px;background:var(--pill);border:1px solid #2c4261;margin:4px 6px 0 0;font-size:12px}
+.ok{color:#86efac;font-weight:700}
+.off{color:#fca5a5;font-weight:700}
+.hidden{display:none!important}
+p,.small{color:var(--muted)}
+h1,h2,h3{margin:0 0 8px}
+.star{font-size:18px;color:var(--gold);margin-left:6px}
+.menu-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.menu-tab{text-align:center;padding:12px 8px;border-radius:14px;background:#0a1322;border:1px solid #22314b;cursor:pointer;font-weight:700}
+.menu-tab.active{background:rgba(244,208,111,.18);border-color:#9a7b22;color:#f4d06f}
+.toolbar-grid{display:grid;grid-template-columns:1fr 220px;gap:10px}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.stat{background:#0a1322;border:1px solid #22314b;border-radius:14px;padding:12px}
+.num{font-size:24px;font-weight:700;color:var(--gold)}
+.brand{text-align:center}
+.brand img{width:320px;max-width:90%;display:block;margin:0 auto 10px auto;filter:drop-shadow(0 0 16px rgba(244,208,111,.35))}
+.notice{margin-top:12px;padding:10px 12px;border-radius:12px;background:#0a1322;border:1px solid #22314b;color:var(--muted)}
+.recipe-row{display:grid;grid-template-columns:1.2fr .8fr auto;gap:8px;margin-bottom:8px}
+.recipe-chip{display:inline-block;padding:6px 10px;border-radius:999px;background:#0b1628;border:1px solid #2d4260;margin:4px 6px 0 0;font-size:13px}
+.section-title{font-size:14px;color:#f4d06f;margin-top:10px}
+.guest-card h3{font-size:22px}
+@media(max-width:900px){
+  .grid,.grid3,.counts,.toolbar-grid{grid-template-columns:1fr}
+  .menu-tabs{grid-template-columns:1fr 1fr}
+  .brand img{width:260px}
+  .recipe-row{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -36,9 +71,9 @@ button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:p
       <div class="stat"><div class="small">Toplam Kategori</div><div class="num">5</div></div>
     </div>
     <div class="notice">
-      Yeni mantık: <b>Meyve suları</b> aynı zamanda <b>alkolsüz meyve kokteyllerinin bağımlı içerik havuzu</b> olarak kullanılır.
-      Yani meyve suyu eklediğinde, mocktail oluştururken seçim listesinde otomatik görünür.
-      Eksik meyve suyu varsa alkolsüz kokteyl misafir menüsünden kalkar.
+      Kokteyl ve alkolsüz kokteyllere artık <b>ölçü</b> ve <b>yapılış</b> ekleyebilirsin.
+      Misafir menüsünde yalnızca <b>içerikler / ölçüler</b> görünür; açıklama ve yapılış görünmez.
+      <b>Güncelle</b> yeni <b>data.js</b> indirir.
     </div>
   </div>
 
@@ -48,7 +83,7 @@ button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:p
       <div id="adminTabs" class="menu-tabs"></div>
     </div>
 
-    <div class="grid">
+    <div class="grid3">
       <div class="card stack">
         <h2>Bağımlı Alkollü İçkiler</h2>
         <div class="small">Kokteyller bu listeye bağlıdır. Buraya eklenenler İçkiler sekmesinde otomatik görünür.</div>
@@ -63,15 +98,32 @@ button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:p
         <h2 id="formTitle">Yeni Ürün</h2>
         <div><input id="itemName" placeholder="Ürün adı"></div>
         <div><select id="itemCategory"></select></div>
+
         <div id="alcoholDependencyBlock" class="hidden">
           <div class="small">Kokteyl için gerekli alkollü içkiler</div>
           <div id="alcoholChecklist"></div>
         </div>
+
         <div id="juiceDependencyBlock" class="hidden">
           <div class="small">Alkolsüz meyve kokteyli için gerekli meyve suları</div>
           <div id="juiceChecklist"></div>
         </div>
-        <div><textarea id="itemNote" placeholder="Açıklama / içerik / servis notu"></textarea></div>
+
+        <div><textarea id="itemNote" placeholder="Açıklama / servis notu (sadece admin tarafı için)"></textarea></div>
+        <div id="preparationBlock" class="hidden">
+          <textarea id="itemPreparation" placeholder="Yapılış (admin için görünür)"></textarea>
+        </div>
+
+        <div id="recipeBlock" class="hidden" class="stack">
+          <div class="section-title">Ölçü / İçerik Listesi</div>
+          <div class="recipe-row">
+            <input id="recipeIngredientName" placeholder="İçerik adı">
+            <input id="recipeIngredientAmount" placeholder="Ölçü (örn 5 cl)">
+            <button id="btnAddRecipeLine" class="blue" type="button">Satır Ekle</button>
+          </div>
+          <div id="recipeLines"></div>
+        </div>
+
         <div class="row">
           <div style="flex:1"><label class="tag"><input id="itemFavorite" type="checkbox"> Favori</label></div>
           <div style="flex:1"><label class="tag"><input id="itemAvailable" type="checkbox" checked> Menüde göster</label></div>
@@ -80,6 +132,12 @@ button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:p
           <button id="btnSaveItem" class="primary" type="button">Ürün Ekle</button>
           <button id="btnCancelEdit" class="secondary hidden" type="button">Düzenlemeyi İptal Et</button>
         </div>
+      </div>
+
+      <div class="card stack">
+        <h2>Bağımlı Görsel Kontrol</h2>
+        <div class="small">Mocktail’ler meyve sularına, kokteyller alkollü içkilere bağlıdır. Eksik ürün varsa misafir menüsünden otomatik kalkar.</div>
+        <div id="dependencyInfo" class="small"></div>
       </div>
     </div>
 
@@ -108,17 +166,34 @@ button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:p
   const CATS=[{key:"spirits",label:"İçkiler",emoji:"🥃"},{key:"cocktails",label:"Kokteyller",emoji:"🍸"},{key:"juices",label:"Meyve Suları",emoji:"🧃"},{key:"coffees",label:"Kahveler",emoji:"☕"},{key:"mocktails",label:"Alkolsüz Meyve Kokteylleri",emoji:"🍹"}];
   const catMap=Object.fromEntries(CATS.map(x=>[x.key,x]));
   let data=JSON.parse(JSON.stringify(window.APP_DATA||{alcohols:[],menus:{}}));
-  let activeAdminCategory="cocktails", activeGuestCategory="cocktails", editingItemId=null;
+  let activeAdminCategory="cocktails", activeGuestCategory="cocktails", editingItemId=null, recipeLines=[];
+
   function uid(){return Math.random().toString(36).slice(2,10);}
   function ensure(){
     if(!Array.isArray(data.alcohols)) data.alcohols=[];
     if(!data.menus||typeof data.menus!=="object") data.menus={};
     CATS.forEach(c=>{if(!Array.isArray(data.menus[c.key])) data.menus[c.key]=[];});
     data.alcohols.forEach(a=>{if(!a.id)a.id=uid(); if(typeof a.available!=="boolean")a.available=true;});
-    CATS.forEach(c=>data.menus[c.key].forEach(i=>{if(!i.id)i.id=uid(); if(typeof i.favorite!=="boolean")i.favorite=false; if(typeof i.available!=="boolean")i.available=true; if(typeof i.note!=="string")i.note=""; if(!Array.isArray(i.alcoholIds)) i.alcoholIds=[]; if(!Array.isArray(i.juiceIds)) i.juiceIds=[]; i.category=c.key;}));
+    CATS.forEach(c=>data.menus[c.key].forEach(i=>{
+      if(!i.id)i.id=uid();
+      if(typeof i.favorite!=="boolean")i.favorite=false;
+      if(typeof i.available!=="boolean")i.available=true;
+      if(typeof i.note!=="string")i.note="";
+      if(typeof i.preparation!=="string")i.preparation="";
+      if(!Array.isArray(i.alcoholIds)) i.alcoholIds=[];
+      if(!Array.isArray(i.juiceIds)) i.juiceIds=[];
+      if(!Array.isArray(i.recipe)) i.recipe=[];
+      i.category=c.key;
+    }));
     syncSpiritsMenu(); repairBrokenIds();
   }
-  function syncSpiritsMenu(){ data.menus.spirits = data.alcohols.map(a=>({id:"menu_"+a.id,sourceAlcoholId:a.id,name:a.name,note:a.note||"",favorite:!!a.favorite,available:a.available!==false,category:"spirits",alcoholIds:[],juiceIds:[]})); }
+  function syncSpiritsMenu(){
+    data.menus.spirits = data.alcohols.map(a=>({
+      id:"menu_"+a.id, sourceAlcoholId:a.id, name:a.name, note:a.note||"",
+      preparation:"", favorite:!!a.favorite, available:a.available!==false,
+      category:"spirits", alcoholIds:[], juiceIds:[], recipe:[]
+    }));
+  }
   function repairBrokenIds(){
     const validAlcohol=new Set(data.alcohols.map(a=>a.id));
     const validJuices=new Set(data.menus.juices.map(j=>j.id));
@@ -128,13 +203,22 @@ button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:p
   ensure();
 
   function saveDataJs(){ return "window.APP_DATA = "+JSON.stringify(data,null,2)+";"; }
-  function downloadFile(name,content,mime){ const blob=new Blob([content],{type:mime}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1000); }
+  function downloadFile(name,content,mime){
+    const blob=new Blob([content],{type:mime});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download=name;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1000);
+  }
   function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
   function getAlcoholById(id){ return data.alcohols.find(x=>x.id===id)||null; }
   function getJuiceById(id){ return data.menus.juices.find(x=>x.id===id)||null; }
   function getItemById(id){ for(const c of CATS){ const f=data.menus[c.key].find(x=>x.id===id); if(f) return {category:c.key,item:f}; } return null; }
   function needsAlcohols(cat){ return cat==="cocktails"; }
   function needsJuices(cat){ return cat==="mocktails"; }
+  function needsRecipe(cat){ return cat==="cocktails" || cat==="mocktails"; }
   function alcoholNames(ids){ return ids.map(id=>getAlcoholById(id)).filter(Boolean).map(x=>x.name); }
   function juiceNames(ids){ return ids.map(id=>getJuiceById(id)).filter(Boolean).map(x=>x.name); }
   function getItemIssues(item,cat){
@@ -151,33 +235,249 @@ button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:p
     if(needsJuices(cat)) return issues.missingJuiceIds.length===0&&issues.unavailableJuices.length===0&&item.juiceIds.length>0;
     return true;
   }
-  function showMode(mode){ const isAdmin=mode==="admin"; document.getElementById("adminHero").classList.toggle("hidden",!isAdmin); document.getElementById("adminMode").classList.toggle("hidden",!isAdmin); document.getElementById("guestMode").classList.toggle("hidden",isAdmin); }
-  function renderTabs(id,active,cb){ const root=document.getElementById(id); root.innerHTML=""; CATS.forEach(cat=>{ const b=document.createElement("button"); b.type="button"; b.className="menu-tab"+(cat.key===active?" active":""); b.innerHTML=cat.emoji+" "+esc(cat.label); b.addEventListener("click",()=>window[cb](cat.key)); root.appendChild(b);});}
-  window.setAdminCategory=function(key){ activeAdminCategory=key; editingItemId=null; render(); };
+  function showMode(mode){
+    const isAdmin=mode==="admin";
+    document.getElementById("adminHero").classList.toggle("hidden",!isAdmin);
+    document.getElementById("adminMode").classList.toggle("hidden",!isAdmin);
+    document.getElementById("guestMode").classList.toggle("hidden",isAdmin);
+  }
+  function renderTabs(id,active,cb){
+    const root=document.getElementById(id); root.innerHTML="";
+    CATS.forEach(cat=>{
+      const b=document.createElement("button");
+      b.type="button"; b.className="menu-tab"+(cat.key===active?" active":"");
+      b.innerHTML=cat.emoji+" "+esc(cat.label);
+      b.addEventListener("click",()=>window[cb](cat.key));
+      root.appendChild(b);
+    });
+  }
+  window.setAdminCategory=function(key){ activeAdminCategory=key; editingItemId=null; recipeLines=[]; render(); };
   window.setGuestCategory=function(key){ activeGuestCategory=key; renderGuestList(); renderTabs("guestTabs",activeGuestCategory,"setGuestCategory"); };
-  function updateFormForCategory(){ const m=catMap[activeAdminCategory]; document.getElementById("formTitle").textContent=m.label+" Ekle / Düzenle"; document.getElementById("adminListTitle").textContent=m.label+" Listesi"; document.getElementById("itemCategory").value=activeAdminCategory; document.getElementById("alcoholDependencyBlock").classList.toggle("hidden",!needsAlcohols(activeAdminCategory)); document.getElementById("juiceDependencyBlock").classList.toggle("hidden",!needsJuices(activeAdminCategory)); }
-  function setFormMode(){ document.getElementById("btnSaveItem").textContent=editingItemId?"Değişiklikleri Kaydet":"Ürün Ekle"; document.getElementById("btnCancelEdit").classList.toggle("hidden",!editingItemId); }
-  function resetForm(){ editingItemId=null; document.getElementById("itemName").value=""; document.getElementById("itemNote").value=""; document.getElementById("itemFavorite").checked=false; document.getElementById("itemAvailable").checked=true; document.querySelectorAll(".check-alcohol").forEach(el=>el.checked=false); document.querySelectorAll(".check-juice").forEach(el=>el.checked=false); setFormMode(); }
-  function renderAlcoholChecklist(){ const root=document.getElementById("alcoholChecklist"); root.innerHTML=""; data.alcohols.forEach(a=>{ const label=document.createElement("label"); label.className="tag"; label.innerHTML='<input class="check-alcohol" type="checkbox" value="'+a.id+'"> '+esc(a.name); root.appendChild(label);}); }
-  function renderJuicesChecklist(){ const root=document.getElementById("juiceChecklist"); root.innerHTML=""; data.menus.juices.forEach(j=>{ const label=document.createElement("label"); label.className="tag"; label.innerHTML='<input class="check-juice" type="checkbox" value="'+j.id+'"> '+esc(j.name); root.appendChild(label);}); }
-  function renderAlcohols(){ const root=document.getElementById("alcoholList"); root.innerHTML=""; if(!data.alcohols.length){ root.innerHTML='<div class="small">Henüz alkollü içki eklenmedi.</div>'; return; } data.alcohols.forEach(a=>{ const div=document.createElement("div"); div.className="item"; div.innerHTML='<div class="row" style="justify-content:space-between"><div><h3>'+esc(a.name)+'</h3><div class="'+(a.available?'ok':'off')+'">'+(a.available?'Şu an var':'Bitti / yok')+'</div></div><div class="row"><button class="'+(a.available?'secondary':'green')+'" type="button" data-toggle-alcohol="'+a.id+'">'+(a.available?'Bitti':'Geldi')+'</button><button class="red" type="button" data-remove-alcohol="'+a.id+'">Sil</button></div></div>'; root.appendChild(div);}); root.querySelectorAll("[data-toggle-alcohol]").forEach(btn=>btn.addEventListener("click",()=>{ const a=getAlcoholById(btn.getAttribute("data-toggle-alcohol")); if(!a)return; a.available=!a.available; syncSpiritsMenu(); render(); })); root.querySelectorAll("[data-remove-alcohol]").forEach(btn=>btn.addEventListener("click",()=>{ data.alcohols=data.alcohols.filter(a=>a.id!==btn.getAttribute("data-remove-alcohol")); syncSpiritsMenu(); repairBrokenIds(); render(); })); }
-  function renderAdminItems(){ const list=data.menus[activeAdminCategory], root=document.getElementById("adminItems"); root.innerHTML=""; if(!list.length){ root.innerHTML='<div class="small">Bu kategoride henüz ürün yok.</div>'; return; } list.forEach(item=>{ const ok=canShowToGuest(item,activeAdminCategory); const tags=alcoholNames(item.alcoholIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('')+juiceNames(item.juiceIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join(''); const div=document.createElement("div"); div.className="item"; div.innerHTML='<div class="row" style="justify-content:space-between"><div><h3>'+esc(item.name)+(item.favorite?'<span class="star">★</span>':'')+'</h3><div class="'+(ok?'ok':'off')+'">'+(item.available?(ok?'Menüde görünür':'Hazır değil / kontrol et'):'Kapalı / görünmez')+'</div></div><div class="row">'+(activeAdminCategory!=="spirits"?'<button class="secondary" type="button" data-edit-item="'+item.id+'">Düzenle</button><button class="blue" type="button" data-fav-item="'+item.id+'">'+(item.favorite?'Favoriden Çıkar':'Favori Yap')+'</button><button class="red" type="button" data-remove-item="'+item.id+'">Sil</button>':'')+'</div></div><div>'+tags+'</div>'+(item.note?'<p>'+esc(item.note)+'</p>':'')+(activeAdminCategory==="spirits"?'<p class="small">Bu liste alkollü içkilerden otomatik oluşur.</p>':''); root.appendChild(div);}); root.querySelectorAll("[data-edit-item]").forEach(btn=>btn.addEventListener("click",()=>startEdit(btn.getAttribute("data-edit-item")))); root.querySelectorAll("[data-fav-item]").forEach(btn=>btn.addEventListener("click",()=>{ const f=getItemById(btn.getAttribute("data-fav-item")); if(f){ f.item.favorite=!f.item.favorite; render(); }})); root.querySelectorAll("[data-remove-item]").forEach(btn=>btn.addEventListener("click",()=>{ data.menus[activeAdminCategory]=data.menus[activeAdminCategory].filter(x=>x.id!==btn.getAttribute("data-remove-item")); render(); })); }
-  function renderGuestList(){ const root=document.getElementById("guestList"), q=document.getElementById("searchInput").value.trim().toLowerCase(), filt=document.getElementById("guestFilter").value; let list=data.menus[activeGuestCategory].filter(item=>canShowToGuest(item,activeGuestCategory)); list=list.filter(item=>{ const haystack=[item.name,item.note].concat(alcoholNames(item.alcoholIds||[])).concat(juiceNames(item.juiceIds||[])).join(" ").toLowerCase(); return (!q||haystack.includes(q)) && (!filt || (filt==="favorites"?item.favorite:true)); }); list.sort((a,b)=>a.favorite!==b.favorite?(a.favorite?-1:1):a.name.localeCompare(b.name,"tr")); root.innerHTML=""; if(!list.length){ root.innerHTML='<div class="item"><h3>Sonuç bulunamadı</h3></div>'; return;} list.forEach(item=>{ const tags=alcoholNames(item.alcoholIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('')+juiceNames(item.juiceIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join(''); const div=document.createElement("div"); div.className="item"; div.innerHTML='<h3>'+esc(item.name)+(item.favorite?'<span class="star">★</span>':'')+'</h3><div>'+tags+'</div>'+(item.note?'<p>'+esc(item.note)+'</p>':''); root.appendChild(div);}); }
-  function startEdit(id){ const found=getItemById(id); if(!found) return; activeAdminCategory=found.category; editingItemId=id; renderTabs("adminTabs",activeAdminCategory,"setAdminCategory"); updateFormForCategory(); renderAlcoholChecklist(); renderJuicesChecklist(); document.getElementById("itemName").value=found.item.name||""; document.getElementById("itemNote").value=found.item.note||""; document.getElementById("itemFavorite").checked=!!found.item.favorite; document.getElementById("itemAvailable").checked=!!found.item.available; document.getElementById("itemCategory").value=found.category; document.querySelectorAll(".check-alcohol").forEach(el=>{ el.checked=(found.item.alcoholIds||[]).includes(el.value);}); document.querySelectorAll(".check-juice").forEach(el=>{ el.checked=(found.item.juiceIds||[]).includes(el.value);}); setFormMode(); window.scrollTo({top:0,behavior:"smooth"}); }
-  function addAlcohol(){ const input=document.getElementById("newAlcoholName"), name=input.value.trim(); if(!name) return alert("İçki adı gir."); if(data.alcohols.some(a=>a.name.toLowerCase()===name.toLowerCase())) return alert("Bu içki zaten var."); data.alcohols.push({id:uid(),name:name,available:true,note:"",favorite:false}); input.value=""; syncSpiritsMenu(); render(); }
-  function saveItem(){ const category=activeAdminCategory; if(category==="spirits"){ alert("İçkiler sekmesi alkollü içkilerden otomatik oluşur."); return; } const name=document.getElementById("itemName").value.trim(), note=document.getElementById("itemNote").value.trim(), favorite=document.getElementById("itemFavorite").checked, available=document.getElementById("itemAvailable").checked; const alcoholIds=needsAlcohols(category)?Array.from(document.querySelectorAll(".check-alcohol:checked")).map(x=>x.value):[]; const juiceIds=needsJuices(category)?Array.from(document.querySelectorAll(".check-juice:checked")).map(x=>x.value):[]; if(!name) return alert("Ürün adı gir."); if(needsAlcohols(category)&&!alcoholIds.length) return alert("En az 1 alkollü içki seç."); if(needsJuices(category)&&!juiceIds.length) return alert("En az 1 meyve suyu seç."); const target=data.menus[category]; if(editingItemId){ const dup=target.some(x=>x.id!==editingItemId && x.name.toLowerCase()===name.toLowerCase()); if(dup) return alert("Bu isimde ürün var."); const found=getItemById(editingItemId); if(!found) return alert("Düzenlenecek ürün bulunamadı."); found.item.name=name; found.item.note=note; found.item.favorite=favorite; found.item.available=available; found.item.alcoholIds=alcoholIds; found.item.juiceIds=juiceIds; } else { if(target.some(x=>x.name.toLowerCase()===name.toLowerCase())) return alert("Bu isimde ürün var."); target.push({id:uid(),name:name,note:note,favorite:favorite,available:available,category:category,alcoholIds:alcoholIds,juiceIds:juiceIds}); } resetForm(); render(); }
-  function updateStats(){ const all=CATS.flatMap(c=>data.menus[c.key]); document.getElementById("statItems").textContent=all.length; document.getElementById("statVisible").textContent=CATS.reduce((sum,c)=>sum+data.menus[c.key].filter(item=>canShowToGuest(item,c.key)).length,0); document.getElementById("statFavorites").textContent=all.filter(x=>x.favorite).length; }
-  function render(){ syncSpiritsMenu(); updateStats(); renderTabs("adminTabs",activeAdminCategory,"setAdminCategory"); renderTabs("guestTabs",activeGuestCategory,"setGuestCategory"); updateFormForCategory(); renderAlcoholChecklist(); renderJuicesChecklist(); renderAlcohols(); renderAdminItems(); renderGuestList(); setFormMode(); }
+
+  function updateFormForCategory(){
+    const m=catMap[activeAdminCategory];
+    document.getElementById("formTitle").textContent=m.label+" Ekle / Düzenle";
+    document.getElementById("adminListTitle").textContent=m.label+" Listesi";
+    document.getElementById("itemCategory").value=activeAdminCategory;
+    document.getElementById("alcoholDependencyBlock").classList.toggle("hidden",!needsAlcohols(activeAdminCategory));
+    document.getElementById("juiceDependencyBlock").classList.toggle("hidden",!needsJuices(activeAdminCategory));
+    document.getElementById("recipeBlock").classList.toggle("hidden",!needsRecipe(activeAdminCategory));
+    document.getElementById("preparationBlock").classList.toggle("hidden",!needsRecipe(activeAdminCategory));
+    document.getElementById("dependencyInfo").innerHTML =
+      activeAdminCategory==="cocktails" ? "Bu kategoride seçilen alkollü içki yoksa ürün misafir menüsünden kalkar." :
+      activeAdminCategory==="mocktails" ? "Bu kategoride seçilen meyve suyu yoksa ürün misafir menüsünden kalkar." :
+      "Bu kategori doğrudan gösterilir.";
+  }
+  function setFormMode(){
+    document.getElementById("btnSaveItem").textContent=editingItemId?"Değişiklikleri Kaydet":"Ürün Ekle";
+    document.getElementById("btnCancelEdit").classList.toggle("hidden",!editingItemId);
+  }
+  function resetForm(){
+    editingItemId=null; recipeLines=[];
+    document.getElementById("itemName").value="";
+    document.getElementById("itemNote").value="";
+    document.getElementById("itemPreparation").value="";
+    document.getElementById("itemFavorite").checked=false;
+    document.getElementById("itemAvailable").checked=true;
+    document.querySelectorAll(".check-alcohol").forEach(el=>el.checked=false);
+    document.querySelectorAll(".check-juice").forEach(el=>el.checked=false);
+    document.getElementById("recipeIngredientName").value="";
+    document.getElementById("recipeIngredientAmount").value="";
+    renderRecipeLines();
+    setFormMode();
+  }
+
+  function renderAlcoholChecklist(){
+    const root=document.getElementById("alcoholChecklist"); root.innerHTML="";
+    data.alcohols.forEach(a=>{
+      const label=document.createElement("label");
+      label.className="tag";
+      label.innerHTML='<input class="check-alcohol" type="checkbox" value="'+a.id+'"> '+esc(a.name);
+      root.appendChild(label);
+    });
+  }
+  function renderJuicesChecklist(){
+    const root=document.getElementById("juiceChecklist"); root.innerHTML="";
+    data.menus.juices.forEach(j=>{
+      const label=document.createElement("label");
+      label.className="tag";
+      label.innerHTML='<input class="check-juice" type="checkbox" value="'+j.id+'"> '+esc(j.name);
+      root.appendChild(label);
+    });
+  }
+  function renderAlcohols(){
+    const root=document.getElementById("alcoholList"); root.innerHTML="";
+    if(!data.alcohols.length){ root.innerHTML='<div class="small">Henüz alkollü içki eklenmedi.</div>'; return; }
+    data.alcohols.forEach(a=>{
+      const div=document.createElement("div");
+      div.className="item";
+      div.innerHTML='<div class="row" style="justify-content:space-between"><div><h3>'+esc(a.name)+'</h3><div class="'+(a.available?'ok':'off')+'">'+(a.available?'Şu an var':'Bitti / yok')+'</div></div><div class="row"><button class="'+(a.available?'secondary':'green')+'" type="button" data-toggle-alcohol="'+a.id+'">'+(a.available?'Bitti':'Geldi')+'</button><button class="red" type="button" data-remove-alcohol="'+a.id+'">Sil</button></div></div>';
+      root.appendChild(div);
+    });
+    root.querySelectorAll("[data-toggle-alcohol]").forEach(btn=>btn.addEventListener("click",()=>{
+      const a=getAlcoholById(btn.getAttribute("data-toggle-alcohol")); if(!a)return;
+      a.available=!a.available; syncSpiritsMenu(); render();
+    }));
+    root.querySelectorAll("[data-remove-alcohol]").forEach(btn=>btn.addEventListener("click",()=>{
+      data.alcohols=data.alcohols.filter(a=>a.id!==btn.getAttribute("data-remove-alcohol"));
+      syncSpiritsMenu(); repairBrokenIds(); render();
+    }));
+  }
+
+  function renderRecipeLines(){
+    const root=document.getElementById("recipeLines"); root.innerHTML="";
+    if(!recipeLines.length){ root.innerHTML='<div class="small">Henüz ölçü satırı eklenmedi.</div>'; return; }
+    recipeLines.forEach((line,idx)=>{
+      const div=document.createElement("div");
+      div.className="item";
+      div.innerHTML='<div class="row" style="justify-content:space-between"><div><span class="recipe-chip">'+esc(line.name)+' — '+esc(line.amount)+'</span></div><div><button class="red" type="button" data-remove-line="'+idx+'">Sil</button></div></div>';
+      root.appendChild(div);
+    });
+    root.querySelectorAll("[data-remove-line]").forEach(btn=>btn.addEventListener("click",()=>{
+      recipeLines.splice(Number(btn.getAttribute("data-remove-line")),1);
+      renderRecipeLines();
+    }));
+  }
+
+  function renderAdminItems(){
+    const list=data.menus[activeAdminCategory], root=document.getElementById("adminItems");
+    root.innerHTML="";
+    if(!list.length){ root.innerHTML='<div class="small">Bu kategoride henüz ürün yok.</div>'; return; }
+    list.forEach(item=>{
+      const ok=canShowToGuest(item,activeAdminCategory);
+      const tags=alcoholNames(item.alcoholIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('')+
+                 juiceNames(item.juiceIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('');
+      const recipeHtml=(item.recipe&&item.recipe.length)
+        ? '<div class="section-title">Ölçüler</div><div>'+item.recipe.map(r=>'<span class="recipe-chip">'+esc(r.name)+' — '+esc(r.amount)+'</span>').join('')+'</div>'
+        : '';
+      const prepHtml=(item.preparation&&item.preparation.trim())?'<div class="section-title">Yapılış</div><p>'+esc(item.preparation)+'</p>':'';
+      const div=document.createElement("div");
+      div.className="item"+(ok?"":" warn");
+      div.innerHTML=
+        '<div class="row" style="justify-content:space-between"><div><h3>'+esc(item.name)+(item.favorite?'<span class="star">★</span>':'')+'</h3><div class="'+(ok?'ok':'off')+'">'+(item.available?(ok?'Menüde görünür':'Hazır değil / kontrol et'):'Kapalı / görünmez')+'</div></div><div class="row">'+
+        (activeAdminCategory!=="spirits"?'<button class="secondary" type="button" data-edit-item="'+item.id+'">Düzenle</button><button class="blue" type="button" data-fav-item="'+item.id+'">'+(item.favorite?'Favoriden Çıkar':'Favori Yap')+'</button><button class="red" type="button" data-remove-item="'+item.id+'">Sil</button>':'')+
+        '</div></div><div>'+tags+'</div>'+(item.note?'<p>'+esc(item.note)+'</p>':'')+recipeHtml+prepHtml+
+        (activeAdminCategory==="spirits"?'<p class="small">Bu liste alkollü içkilerden otomatik oluşur.</p>':'');
+      root.appendChild(div);
+    });
+    root.querySelectorAll("[data-edit-item]").forEach(btn=>btn.addEventListener("click",()=>startEdit(btn.getAttribute("data-edit-item"))));
+    root.querySelectorAll("[data-fav-item]").forEach(btn=>btn.addEventListener("click",()=>{ const f=getItemById(btn.getAttribute("data-fav-item")); if(f){ f.item.favorite=!f.item.favorite; render(); }}));
+    root.querySelectorAll("[data-remove-item]").forEach(btn=>btn.addEventListener("click",()=>{ data.menus[activeAdminCategory]=data.menus[activeAdminCategory].filter(x=>x.id!==btn.getAttribute("data-remove-item")); render(); }));
+  }
+
+  function renderGuestList(){
+    const root=document.getElementById("guestList"), q=document.getElementById("searchInput").value.trim().toLowerCase(), filt=document.getElementById("guestFilter").value;
+    let list=data.menus[activeGuestCategory].filter(item=>canShowToGuest(item,activeGuestCategory));
+    list=list.filter(item=>{
+      const haystack=[item.name]
+        .concat((item.recipe||[]).map(r=>r.name+" "+r.amount))
+        .concat(alcoholNames(item.alcoholIds||[]))
+        .concat(juiceNames(item.juiceIds||[]))
+        .join(" ").toLowerCase();
+      return (!q||haystack.includes(q)) && (!filt || (filt==="favorites"?item.favorite:true));
+    });
+    list.sort((a,b)=>a.favorite!==b.favorite?(a.favorite?-1:1):a.name.localeCompare(b.name,"tr"));
+    root.innerHTML="";
+    if(!list.length){ root.innerHTML='<div class="item"><h3>Sonuç bulunamadı</h3></div>'; return; }
+    list.forEach(item=>{
+      const tags=(item.recipe&&item.recipe.length)
+        ? item.recipe.map(r=>'<span class="recipe-chip">'+esc(r.name)+' — '+esc(r.amount)+'</span>').join('')
+        : alcoholNames(item.alcoholIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('')+
+          juiceNames(item.juiceIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('');
+      const div=document.createElement("div");
+      div.className="item guest-card";
+      div.innerHTML='<h3>'+esc(item.name)+(item.favorite?'<span class="star">★</span>':'')+'</h3><div>'+tags+'</div>';
+      root.appendChild(div);
+    });
+  }
+
+  function startEdit(id){
+    const found=getItemById(id); if(!found) return;
+    activeAdminCategory=found.category; editingItemId=id; recipeLines=JSON.parse(JSON.stringify(found.item.recipe||[]));
+    renderTabs("adminTabs",activeAdminCategory,"setAdminCategory");
+    updateFormForCategory(); renderAlcoholChecklist(); renderJuicesChecklist();
+    document.getElementById("itemName").value=found.item.name||"";
+    document.getElementById("itemNote").value=found.item.note||"";
+    document.getElementById("itemPreparation").value=found.item.preparation||"";
+    document.getElementById("itemFavorite").checked=!!found.item.favorite;
+    document.getElementById("itemAvailable").checked=!!found.item.available;
+    document.getElementById("itemCategory").value=found.category;
+    document.querySelectorAll(".check-alcohol").forEach(el=>{ el.checked=(found.item.alcoholIds||[]).includes(el.value);});
+    document.querySelectorAll(".check-juice").forEach(el=>{ el.checked=(found.item.juiceIds||[]).includes(el.value);});
+    renderRecipeLines(); setFormMode(); window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function addAlcohol(){
+    const input=document.getElementById("newAlcoholName"), name=input.value.trim();
+    if(!name) return alert("İçki adı gir.");
+    if(data.alcohols.some(a=>a.name.toLowerCase()===name.toLowerCase())) return alert("Bu içki zaten var.");
+    data.alcohols.push({id:uid(),name:name,available:true,note:"",favorite:false});
+    input.value=""; syncSpiritsMenu(); render();
+  }
+
+  function addRecipeLine(){
+    const name=document.getElementById("recipeIngredientName").value.trim();
+    const amount=document.getElementById("recipeIngredientAmount").value.trim();
+    if(!name || !amount) return alert("İçerik adı ve ölçü gir.");
+    recipeLines.push({name, amount});
+    document.getElementById("recipeIngredientName").value="";
+    document.getElementById("recipeIngredientAmount").value="";
+    renderRecipeLines();
+  }
+
+  function saveItem(){
+    const category=activeAdminCategory;
+    if(category==="spirits"){ alert("İçkiler sekmesi alkollü içkilerden otomatik oluşur."); return; }
+    const name=document.getElementById("itemName").value.trim();
+    const note=document.getElementById("itemNote").value.trim();
+    const preparation=document.getElementById("itemPreparation").value.trim();
+    const favorite=document.getElementById("itemFavorite").checked;
+    const available=document.getElementById("itemAvailable").checked;
+    const alcoholIds=needsAlcohols(category)?Array.from(document.querySelectorAll(".check-alcohol:checked")).map(x=>x.value):[];
+    const juiceIds=needsJuices(category)?Array.from(document.querySelectorAll(".check-juice:checked")).map(x=>x.value):[];
+    if(!name) return alert("Ürün adı gir.");
+    if(needsAlcohols(category)&&!alcoholIds.length) return alert("En az 1 alkollü içki seç.");
+    if(needsJuices(category)&&!juiceIds.length) return alert("En az 1 meyve suyu seç.");
+    const target=data.menus[category];
+    if(editingItemId){
+      const dup=target.some(x=>x.id!==editingItemId && x.name.toLowerCase()===name.toLowerCase());
+      if(dup) return alert("Bu isimde ürün var.");
+      const found=getItemById(editingItemId); if(!found) return alert("Düzenlenecek ürün bulunamadı.");
+      found.item.name=name; found.item.note=note; found.item.preparation=preparation; found.item.favorite=favorite; found.item.available=available;
+      found.item.alcoholIds=alcoholIds; found.item.juiceIds=juiceIds; found.item.recipe=JSON.parse(JSON.stringify(recipeLines));
+    } else {
+      if(target.some(x=>x.name.toLowerCase()===name.toLowerCase())) return alert("Bu isimde ürün var.");
+      target.push({id:uid(),name:name,note:note,preparation:preparation,favorite:favorite,available:available,category:category,alcoholIds:alcoholIds,juiceIds:juiceIds,recipe:JSON.parse(JSON.stringify(recipeLines))});
+    }
+    resetForm(); render();
+  }
+
+  function updateStats(){
+    const all=CATS.flatMap(c=>data.menus[c.key]);
+    document.getElementById("statItems").textContent=all.length;
+    document.getElementById("statVisible").textContent=CATS.reduce((sum,c)=>sum+data.menus[c.key].filter(item=>canShowToGuest(item,c.key)).length,0);
+    document.getElementById("statFavorites").textContent=all.filter(x=>x.favorite).length;
+  }
+
+  function render(){
+    syncSpiritsMenu(); updateStats();
+    renderTabs("adminTabs",activeAdminCategory,"setAdminCategory");
+    renderTabs("guestTabs",activeGuestCategory,"setGuestCategory");
+    updateFormForCategory(); renderAlcoholChecklist(); renderJuicesChecklist(); renderAlcohols(); renderAdminItems(); renderGuestList(); renderRecipeLines(); setFormMode();
+  }
+
   document.getElementById("btnAdmin").addEventListener("click",()=>showMode("admin"));
   document.getElementById("btnGuest").addEventListener("click",()=>showMode("guest"));
   document.getElementById("btnUpdate").addEventListener("click",()=>downloadFile("data.js",saveDataJs(),"application/javascript;charset=utf-8"));
   document.getElementById("btnAddAlcohol").addEventListener("click",addAlcohol);
   document.getElementById("btnSaveItem").addEventListener("click",saveItem);
   document.getElementById("btnCancelEdit").addEventListener("click",resetForm);
+  document.getElementById("btnAddRecipeLine").addEventListener("click",addRecipeLine);
   document.getElementById("itemCategory").innerHTML=CATS.map(cat=>'<option value="'+cat.key+'">'+cat.emoji+' '+esc(cat.label)+'</option>').join('');
   document.getElementById("itemCategory").addEventListener("change",e=>{ activeAdminCategory=e.target.value; resetForm(); render(); });
   document.getElementById("searchInput").addEventListener("input",renderGuestList);
   document.getElementById("guestFilter").addEventListener("change",renderGuestList);
+
   const params=new URLSearchParams(window.location.search), guestOnly=params.get("mode")==="guest";
   render(); showMode(guestOnly?"guest":"admin");
   if(guestOnly){ document.getElementById("btnAdmin").style.display="none"; document.getElementById("btnGuest").style.display="none"; document.getElementById("btnUpdate").style.display="none"; }
