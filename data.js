@@ -14,6 +14,7 @@ window.APP_DATA = {
         "name": "Mojito",
         "note": "Ferah ve naneli klasik.",
         "preparation": "Bardağa buz ekle, romu koy, nane ile hafif karıştır, soda ile tamamla.",
+        "imageData": "",
         "favorite": true,
         "available": true,
         "category": "cocktails",
@@ -31,6 +32,7 @@ window.APP_DATA = {
         "name": "Gin Tonic",
         "note": "Soğuk ve ferah servis.",
         "preparation": "Bardağı buzla doldur, gin ekle, tonik ile tamamla.",
+        "imageData": "",
         "favorite": false,
         "available": true,
         "category": "cocktails",
@@ -44,13 +46,13 @@ window.APP_DATA = {
       }
     ],
     "juices": [
-      { "id": "itm_j1", "name": "Portakal Suyu", "note": "Taze sıkım.", "preparation": "", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [], "recipe": [] },
-      { "id": "itm_j2", "name": "Vişne Suyu", "note": "Soğuk servis edilir.", "preparation": "", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [], "recipe": [] },
-      { "id": "itm_j3", "name": "Ananas Suyu", "note": "Soğuk servis edilir.", "preparation": "", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [], "recipe": [] }
+      { "id": "itm_j1", "name": "Portakal Suyu", "note": "Taze sıkım.", "preparation": "", "imageData": "", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [], "recipe": [] },
+      { "id": "itm_j2", "name": "Vişne Suyu", "note": "Soğuk servis edilir.", "preparation": "", "imageData": "", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [], "recipe": [] },
+      { "id": "itm_j3", "name": "Ananas Suyu", "note": "Soğuk servis edilir.", "preparation": "", "imageData": "", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [], "recipe": [] }
     ],
     "coffees": [
-      { "id": "itm_cf1", "name": "Americano", "note": "Sade kahve.", "preparation": "", "favorite": false, "available": true, "category": "coffees", "alcoholIds": [], "juiceIds": [], "recipe": [] },
-      { "id": "itm_cf2", "name": "Latte", "note": "Yumuşak içimli.", "preparation": "", "favorite": true, "available": true, "category": "coffees", "alcoholIds": [], "juiceIds": [], "recipe": [] }
+      { "id": "itm_cf1", "name": "Americano", "note": "Sade kahve.", "preparation": "", "imageData": "", "favorite": false, "available": true, "category": "coffees", "alcoholIds": [], "juiceIds": [], "recipe": [] },
+      { "id": "itm_cf2", "name": "Latte", "note": "Yumuşak içimli.", "preparation": "", "imageData": "", "favorite": true, "available": true, "category": "coffees", "alcoholIds": [], "juiceIds": [], "recipe": [] }
     ],
     "mocktails": [
       {
@@ -58,6 +60,7 @@ window.APP_DATA = {
         "name": "Berry Fresh",
         "note": "Meyvemsi ve ferah.",
         "preparation": "Tüm malzemeleri buzla çalkala, soğuk bardağa al.",
+        "imageData": "",
         "favorite": true,
         "available": true,
         "category": "mocktails",
@@ -74,6 +77,7 @@ window.APP_DATA = {
         "name": "Tropical Cooler",
         "note": "Serinletici meyve karışımı.",
         "preparation": "Bardağa buz doldur, meyve sularını ekle, hafifçe karıştır.",
+        "imageData": "",
         "favorite": false,
         "available": true,
         "category": "mocktails",

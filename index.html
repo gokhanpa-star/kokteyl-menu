@@ -47,6 +47,8 @@ h1,h2,h3{margin:0 0 8px}
 .recipe-chip{display:inline-block;padding:6px 10px;border-radius:999px;background:#0b1628;border:1px solid #2d4260;margin:4px 6px 0 0;font-size:13px}
 .section-title{font-size:14px;color:#f4d06f;margin-top:10px}
 .guest-card h3{font-size:22px}
+.product-image{width:100%;max-width:260px;aspect-ratio:1/1;object-fit:cover;border-radius:16px;border:1px solid #2c4261;display:block;margin:0 0 12px 0}
+.admin-image-preview{width:140px;height:140px;object-fit:cover;border-radius:16px;border:1px solid #2c4261;display:block;background:#0a1322}
 @media(max-width:900px){
   .grid,.grid3,.counts,.toolbar-grid{grid-template-columns:1fr}
   .menu-tabs{grid-template-columns:1fr 1fr}
@@ -110,6 +112,12 @@ h1,h2,h3{margin:0 0 8px}
         </div>
 
         <div><textarea id="itemNote" placeholder="Açıklama / servis notu (sadece admin tarafı için)"></textarea></div>
+        <div class="stack">
+          <div class="small">Ürün fotoğrafı (isteğe bağlı)</div>
+          <input id="itemImageFile" type="file" accept="image/*">
+          <img id="itemImagePreview" class="admin-image-preview hidden" alt="Ürün görsel önizleme">
+          <button id="btnRemoveImage" class="secondary hidden" type="button">Fotoğrafı Kaldır</button>
+        </div>
         <div id="preparationBlock" class="hidden">
           <textarea id="itemPreparation" placeholder="Yapılış (admin için görünür)"></textarea>
         </div>
@@ -166,7 +174,7 @@ h1,h2,h3{margin:0 0 8px}
   const CATS=[{key:"spirits",label:"İçkiler",emoji:"🥃"},{key:"cocktails",label:"Kokteyller",emoji:"🍸"},{key:"juices",label:"Meyve Suları",emoji:"🧃"},{key:"coffees",label:"Kahveler",emoji:"☕"},{key:"mocktails",label:"Alkolsüz Meyve Kokteylleri",emoji:"🍹"}];
   const catMap=Object.fromEntries(CATS.map(x=>[x.key,x]));
   let data=JSON.parse(JSON.stringify(window.APP_DATA||{alcohols:[],menus:{}}));
-  let activeAdminCategory="cocktails", activeGuestCategory="cocktails", editingItemId=null, recipeLines=[];
+  let activeAdminCategory="cocktails", activeGuestCategory="cocktails", editingItemId=null, recipeLines=[], currentImageData="";
 
   function uid(){return Math.random().toString(36).slice(2,10);}
   function ensure(){
@@ -180,6 +188,7 @@ h1,h2,h3{margin:0 0 8px}
       if(typeof i.available!=="boolean")i.available=true;
       if(typeof i.note!=="string")i.note="";
       if(typeof i.preparation!=="string")i.preparation="";
+      if(typeof i.imageData!=="string")i.imageData="";
       if(!Array.isArray(i.alcoholIds)) i.alcoholIds=[];
       if(!Array.isArray(i.juiceIds)) i.juiceIds=[];
       if(!Array.isArray(i.recipe)) i.recipe=[];
@@ -190,7 +199,7 @@ h1,h2,h3{margin:0 0 8px}
   function syncSpiritsMenu(){
     data.menus.spirits = data.alcohols.map(a=>({
       id:"menu_"+a.id, sourceAlcoholId:a.id, name:a.name, note:a.note||"",
-      preparation:"", favorite:!!a.favorite, available:a.available!==false,
+      preparation:"", imageData:"", favorite:!!a.favorite, available:a.available!==false,
       category:"spirits", alcoholIds:[], juiceIds:[], recipe:[]
     }));
   }
@@ -277,6 +286,9 @@ h1,h2,h3{margin:0 0 8px}
     document.getElementById("itemName").value="";
     document.getElementById("itemNote").value="";
     document.getElementById("itemPreparation").value="";
+    currentImageData="";
+    updateImagePreview();
+    const fileInput=document.getElementById("itemImageFile"); if(fileInput) fileInput.value="";
     document.getElementById("itemFavorite").checked=false;
     document.getElementById("itemAvailable").checked=true;
     document.querySelectorAll(".check-alcohol").forEach(el=>el.checked=false);
@@ -362,6 +374,20 @@ h1,h2,h3{margin:0 0 8px}
     }
   }
 
+  function updateImagePreview(){
+    const img=document.getElementById("itemImagePreview");
+    const btn=document.getElementById("btnRemoveImage");
+    if(currentImageData){
+      img.src=currentImageData;
+      img.classList.remove("hidden");
+      btn.classList.remove("hidden");
+    } else {
+      img.removeAttribute("src");
+      img.classList.add("hidden");
+      btn.classList.add("hidden");
+    }
+  }
+
   function renderRecipeLines(){
     const root=document.getElementById("recipeLines"); root.innerHTML="";
     if(!recipeLines.length){ root.innerHTML='<div class="small">Henüz ölçü satırı eklenmedi.</div>'; return; }
@@ -392,6 +418,7 @@ h1,h2,h3{margin:0 0 8px}
       const div=document.createElement("div");
       div.className="item"+(ok?"":" warn");
       div.innerHTML=
+        (item.imageData?'<img class="product-image" src="'+item.imageData+'" alt="'+esc(item.name)+'">':'')+
         '<div class="row" style="justify-content:space-between"><div><h3>'+esc(item.name)+(item.favorite?'<span class="star">★</span>':'')+'</h3><div class="'+(ok?'ok':'off')+'">'+(item.available?(ok?'Menüde görünür':'Hazır değil / kontrol et'):'Kapalı / görünmez')+'</div></div><div class="row">'+
         (activeAdminCategory!=="spirits"?'<button class="secondary" type="button" data-edit-item="'+item.id+'">Düzenle</button><button class="blue" type="button" data-fav-item="'+item.id+'">'+(item.favorite?'Favoriden Çıkar':'Favori Yap')+'</button><button class="red" type="button" data-remove-item="'+item.id+'">Sil</button>':'')+
         '</div></div><div>'+tags+'</div>'+(item.note?'<p>'+esc(item.note)+'</p>':'')+recipeHtml+prepHtml+
@@ -424,7 +451,7 @@ h1,h2,h3{margin:0 0 8px}
           juiceNames(item.juiceIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('');
       const div=document.createElement("div");
       div.className="item guest-card";
-      div.innerHTML='<h3>'+esc(item.name)+(item.favorite?'<span class="star">★</span>':'')+'</h3><div>'+tags+'</div>';
+      div.innerHTML=(item.imageData?'<img class="product-image" src="'+item.imageData+'" alt="'+esc(item.name)+'">':'')+'<h3>'+esc(item.name)+(item.favorite?'<span class="star">★</span>':'')+'</h3><div>'+tags+'</div>';
       root.appendChild(div);
     });
   }
@@ -437,6 +464,8 @@ h1,h2,h3{margin:0 0 8px}
     document.getElementById("itemName").value=found.item.name||"";
     document.getElementById("itemNote").value=found.item.note||"";
     document.getElementById("itemPreparation").value=found.item.preparation||"";
+    currentImageData=found.item.imageData||"";
+    updateImagePreview();
     document.getElementById("itemFavorite").checked=!!found.item.favorite;
     document.getElementById("itemAvailable").checked=!!found.item.available;
     document.getElementById("itemCategory").value=found.category;
@@ -471,6 +500,7 @@ h1,h2,h3{margin:0 0 8px}
     const note=document.getElementById("itemNote").value.trim();
     const preparation=document.getElementById("itemPreparation").value.trim();
     const favorite=document.getElementById("itemFavorite").checked;
+    const imageData=currentImageData || "";
     const available=document.getElementById("itemAvailable").checked;
     const alcoholIds=needsAlcohols(category)?Array.from(document.querySelectorAll(".check-alcohol:checked")).map(x=>x.value):[];
     const juiceIds=needsJuices(category)?Array.from(document.querySelectorAll(".check-juice:checked")).map(x=>x.value):[];
@@ -482,11 +512,11 @@ h1,h2,h3{margin:0 0 8px}
       const dup=target.some(x=>x.id!==editingItemId && x.name.toLowerCase()===name.toLowerCase());
       if(dup) return alert("Bu isimde ürün var.");
       const found=getItemById(editingItemId); if(!found) return alert("Düzenlenecek ürün bulunamadı.");
-      found.item.name=name; found.item.note=note; found.item.preparation=preparation; found.item.favorite=favorite; found.item.available=available;
+      found.item.name=name; found.item.note=note; found.item.preparation=preparation; found.item.imageData=imageData; found.item.favorite=favorite; found.item.available=available;
       found.item.alcoholIds=alcoholIds; found.item.juiceIds=juiceIds; found.item.recipe=JSON.parse(JSON.stringify(recipeLines));
     } else {
       if(target.some(x=>x.name.toLowerCase()===name.toLowerCase())) return alert("Bu isimde ürün var.");
-      target.push({id:uid(),name:name,note:note,preparation:preparation,favorite:favorite,available:available,category:category,alcoholIds:alcoholIds,juiceIds:juiceIds,recipe:JSON.parse(JSON.stringify(recipeLines))});
+      target.push({id:uid(),name:name,note:note,preparation:preparation,imageData:imageData,favorite:favorite,available:available,category:category,alcoholIds:alcoholIds,juiceIds:juiceIds,recipe:JSON.parse(JSON.stringify(recipeLines))});
     }
     resetForm(); render();
   }
@@ -521,6 +551,23 @@ h1,h2,h3{margin:0 0 8px}
   document.getElementById("itemCategory").addEventListener("change",e=>{ activeAdminCategory=e.target.value; resetForm(); render(); });
   document.getElementById("searchInput").addEventListener("input",renderGuestList);
   document.getElementById("guestFilter").addEventListener("change",renderGuestList);
+
+  document.getElementById("itemImageFile").addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      currentImageData = String(reader.result || "");
+      updateImagePreview();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById("btnRemoveImage").addEventListener("click", () => {
+    currentImageData = "";
+    const fileInput=document.getElementById("itemImageFile");
+    if(fileInput) fileInput.value = "";
+    updateImagePreview();
+  });
 
   const params=new URLSearchParams(window.location.search), guestOnly=params.get("mode")==="guest";
   render(); showMode(guestOnly?"guest":"admin");
