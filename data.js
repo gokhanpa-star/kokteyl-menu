@@ -9,20 +9,21 @@ window.APP_DATA = {
   "menus": {
     "spirits": [],
     "cocktails": [
-      { "id": "itm_ck1", "name": "Mojito", "note": "Ferah ve naneli klasik.", "favorite": true, "available": true, "category": "cocktails", "alcoholIds": ["alc_rom"] },
-      { "id": "itm_ck2", "name": "Gin Tonic", "note": "Soğuk ve ferah servis.", "favorite": false, "available": true, "category": "cocktails", "alcoholIds": ["alc_cin"] }
+      { "id": "itm_ck1", "name": "Mojito", "note": "Ferah ve naneli klasik.", "favorite": true, "available": true, "category": "cocktails", "alcoholIds": ["alc_rom"], "juiceIds": [] },
+      { "id": "itm_ck2", "name": "Gin Tonic", "note": "Soğuk ve ferah servis.", "favorite": false, "available": true, "category": "cocktails", "alcoholIds": ["alc_cin"], "juiceIds": [] }
     ],
     "juices": [
-      { "id": "itm_j1", "name": "Portakal Suyu", "note": "Taze sıkım.", "favorite": false, "available": true, "category": "juices", "alcoholIds": [] },
-      { "id": "itm_j2", "name": "Vişne Suyu", "note": "Soğuk servis edilir.", "favorite": false, "available": true, "category": "juices", "alcoholIds": [] }
+      { "id": "itm_j1", "name": "Portakal Suyu", "note": "Taze sıkım.", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [] },
+      { "id": "itm_j2", "name": "Vişne Suyu", "note": "Soğuk servis edilir.", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [] },
+      { "id": "itm_j3", "name": "Ananas Suyu", "note": "Soğuk servis edilir.", "favorite": false, "available": true, "category": "juices", "alcoholIds": [], "juiceIds": [] }
     ],
     "coffees": [
-      { "id": "itm_cf1", "name": "Americano", "note": "Sade kahve.", "favorite": false, "available": true, "category": "coffees", "alcoholIds": [] },
-      { "id": "itm_cf2", "name": "Latte", "note": "Yumuşak içimli.", "favorite": true, "available": true, "category": "coffees", "alcoholIds": [] }
+      { "id": "itm_cf1", "name": "Americano", "note": "Sade kahve.", "favorite": false, "available": true, "category": "coffees", "alcoholIds": [], "juiceIds": [] },
+      { "id": "itm_cf2", "name": "Latte", "note": "Yumuşak içimli.", "favorite": true, "available": true, "category": "coffees", "alcoholIds": [], "juiceIds": [] }
     ],
     "mocktails": [
-      { "id": "itm_m1", "name": "Berry Fresh", "note": "Çilek püresi, portakal suyu ve buz ile hazırlanır.", "favorite": true, "available": true, "category": "mocktails", "alcoholIds": [] },
-      { "id": "itm_m2", "name": "Virgin Mint Cooler", "note": "Nane, lime ve soda ile hazırlanır.", "favorite": false, "available": true, "category": "mocktails", "alcoholIds": [] }
+      { "id": "itm_m1", "name": "Berry Fresh", "note": "Meyvemsi ve ferah.", "favorite": true, "available": true, "category": "mocktails", "alcoholIds": [], "juiceIds": ["itm_j1", "itm_j2"] },
+      { "id": "itm_m2", "name": "Tropical Cooler", "note": "Serinletici meyve karışımı.", "favorite": false, "available": true, "category": "mocktails", "alcoholIds": [], "juiceIds": ["itm_j1", "itm_j3"] }
     ]
   }
 };
