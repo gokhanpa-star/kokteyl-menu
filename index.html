@@ -117,7 +117,7 @@ h1,h2,h3{margin:0 0 8px}
         <div id="recipeBlock" class="hidden" class="stack">
           <div class="section-title">Ölçü / İçerik Listesi</div>
           <div class="recipe-row">
-            <input id="recipeIngredientName" placeholder="İçerik adı">
+            <select id="recipeIngredientName"></select>
             <input id="recipeIngredientAmount" placeholder="Ölçü (örn 5 cl)">
             <button id="btnAddRecipeLine" class="blue" type="button">Satır Ekle</button>
           </div>
@@ -281,8 +281,8 @@ h1,h2,h3{margin:0 0 8px}
     document.getElementById("itemAvailable").checked=true;
     document.querySelectorAll(".check-alcohol").forEach(el=>el.checked=false);
     document.querySelectorAll(".check-juice").forEach(el=>el.checked=false);
-    document.getElementById("recipeIngredientName").value="";
     document.getElementById("recipeIngredientAmount").value="";
+    renderRecipeIngredientSelect();
     renderRecipeLines();
     setFormMode();
   }
@@ -322,6 +322,44 @@ h1,h2,h3{margin:0 0 8px}
       data.alcohols=data.alcohols.filter(a=>a.id!==btn.getAttribute("data-remove-alcohol"));
       syncSpiritsMenu(); repairBrokenIds(); render();
     }));
+  }
+
+  function getRecipeIngredientOptions(){
+    if(activeAdminCategory==="cocktails"){
+      return Array.from(document.querySelectorAll(".check-alcohol:checked")).map(el=>{
+        const a = getAlcoholById(el.value);
+        return a ? a.name : null;
+      }).filter(Boolean);
+    }
+    if(activeAdminCategory==="mocktails"){
+      return Array.from(document.querySelectorAll(".check-juice:checked")).map(el=>{
+        const j = getJuiceById(el.value);
+        return j ? j.name : null;
+      }).filter(Boolean);
+    }
+    return [];
+  }
+
+  function renderRecipeIngredientSelect(selectedValue){
+    const sel = document.getElementById("recipeIngredientName");
+    if(!sel) return;
+    const options = getRecipeIngredientOptions();
+    sel.innerHTML = '';
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = options.length ? "İçerik seç" : "Önce içerik seç";
+    sel.appendChild(placeholder);
+    options.forEach(name=>{
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      sel.appendChild(opt);
+    });
+    if(selectedValue && options.includes(selectedValue)){
+      sel.value = selectedValue;
+    } else {
+      sel.value = "";
+    }
   }
 
   function renderRecipeLines(){
@@ -381,7 +419,7 @@ h1,h2,h3{margin:0 0 8px}
     if(!list.length){ root.innerHTML='<div class="item"><h3>Sonuç bulunamadı</h3></div>'; return; }
     list.forEach(item=>{
       const tags=(item.recipe&&item.recipe.length)
-        ? item.recipe.map(r=>'<span class="recipe-chip">'+esc(r.name)+' — '+esc(r.amount)+'</span>').join('')
+        ? item.recipe.map(r=>'<span class="tag">'+esc(r.name)+'</span>').join('')
         : alcoholNames(item.alcoholIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('')+
           juiceNames(item.juiceIds||[]).map(n=>'<span class="tag">'+esc(n)+'</span>').join('');
       const div=document.createElement("div");
@@ -404,6 +442,7 @@ h1,h2,h3{margin:0 0 8px}
     document.getElementById("itemCategory").value=found.category;
     document.querySelectorAll(".check-alcohol").forEach(el=>{ el.checked=(found.item.alcoholIds||[]).includes(el.value);});
     document.querySelectorAll(".check-juice").forEach(el=>{ el.checked=(found.item.juiceIds||[]).includes(el.value);});
+    renderRecipeIngredientSelect();
     renderRecipeLines(); setFormMode(); window.scrollTo({top:0,behavior:"smooth"});
   }
 
@@ -418,10 +457,10 @@ h1,h2,h3{margin:0 0 8px}
   function addRecipeLine(){
     const name=document.getElementById("recipeIngredientName").value.trim();
     const amount=document.getElementById("recipeIngredientAmount").value.trim();
-    if(!name || !amount) return alert("İçerik adı ve ölçü gir.");
+    if(!name || !amount) return alert("İçerik ve ölçü seç/gir.");
     recipeLines.push({name, amount});
-    document.getElementById("recipeIngredientName").value="";
     document.getElementById("recipeIngredientAmount").value="";
+    renderRecipeIngredientSelect();
     renderRecipeLines();
   }
 
@@ -463,7 +502,7 @@ h1,h2,h3{margin:0 0 8px}
     syncSpiritsMenu(); updateStats();
     renderTabs("adminTabs",activeAdminCategory,"setAdminCategory");
     renderTabs("guestTabs",activeGuestCategory,"setGuestCategory");
-    updateFormForCategory(); renderAlcoholChecklist(); renderJuicesChecklist(); renderAlcohols(); renderAdminItems(); renderGuestList(); renderRecipeLines(); setFormMode();
+    updateFormForCategory(); renderAlcoholChecklist(); renderJuicesChecklist(); renderAlcohols(); renderAdminItems(); renderGuestList(); renderRecipeIngredientSelect(); renderRecipeLines(); setFormMode();
   }
 
   document.getElementById("btnAdmin").addEventListener("click",()=>showMode("admin"));
@@ -473,6 +512,11 @@ h1,h2,h3{margin:0 0 8px}
   document.getElementById("btnSaveItem").addEventListener("click",saveItem);
   document.getElementById("btnCancelEdit").addEventListener("click",resetForm);
   document.getElementById("btnAddRecipeLine").addEventListener("click",addRecipeLine);
+  document.addEventListener("change", (e) => {
+    if(e.target.classList.contains("check-alcohol") || e.target.classList.contains("check-juice")){
+      renderRecipeIngredientSelect();
+    }
+  });
   document.getElementById("itemCategory").innerHTML=CATS.map(cat=>'<option value="'+cat.key+'">'+cat.emoji+' '+esc(cat.label)+'</option>').join('');
   document.getElementById("itemCategory").addEventListener("change",e=>{ activeAdminCategory=e.target.value; resetForm(); render(); });
   document.getElementById("searchInput").addEventListener("input",renderGuestList);
