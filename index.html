@@ -43,7 +43,8 @@ h1,h2,h3{margin:0 0 8px}
 .brand{text-align:center}
 .brand img{width:320px;max-width:90%;display:block;margin:0 auto 10px auto;filter:drop-shadow(0 0 16px rgba(244,208,111,.35))}
 .brand-photos{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:8px}
-.brand-photo{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(244,208,111,.85);box-shadow:0 6px 18px rgba(0,0,0,.28)}
+.brand-photo{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(244,208,111,.85);box-shadow:0 6px 18px rgba(0,0,0,.28);transition:all .3s ease}
+.brand-photo:hover{transform:scale(1.15);box-shadow:0 0 25px rgba(244,208,111,.8),0 10px 30px rgba(0,0,0,.4)}
 .notice{margin-top:12px;padding:10px 12px;border-radius:12px;background:#0a1322;border:1px solid #22314b;color:var(--muted)}
 .recipe-row{display:grid;grid-template-columns:1.2fr .8fr auto;gap:8px;margin-bottom:8px}
 .recipe-chip{display:inline-block;padding:6px 10px;border-radius:999px;background:#0b1628;border:1px solid #2d4260;margin:4px 6px 0 0;font-size:13px}
@@ -57,12 +58,13 @@ h1,h2,h3{margin:0 0 8px}
   .brand img{width:260px}
   .recipe-row{grid-template-columns:1fr}
 }
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div id="adminHero" class="hero">
-    <div class="brand">
+    <div class="brand" style="animation:fadeIn 0.8s ease">
       <img src="logo.png" alt="Tipsy Daisy logo">
       <div class="brand-photos">
         <img src="hero_photo_1.png" alt="Aile fotoğrafı 1" class="brand-photo">
