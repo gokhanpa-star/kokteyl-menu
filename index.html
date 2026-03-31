@@ -42,6 +42,8 @@ h1,h2,h3{margin:0 0 8px}
 .num{font-size:24px;font-weight:700;color:var(--gold)}
 .brand{text-align:center}
 .brand img{width:320px;max-width:90%;display:block;margin:0 auto 10px auto;filter:drop-shadow(0 0 16px rgba(244,208,111,.35))}
+.brand-photos{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+.brand-photo{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(244,208,111,.85);box-shadow:0 6px 18px rgba(0,0,0,.28)}
 .notice{margin-top:12px;padding:10px 12px;border-radius:12px;background:#0a1322;border:1px solid #22314b;color:var(--muted)}
 .recipe-row{display:grid;grid-template-columns:1.2fr .8fr auto;gap:8px;margin-bottom:8px}
 .recipe-chip{display:inline-block;padding:6px 10px;border-radius:999px;background:#0b1628;border:1px solid #2d4260;margin:4px 6px 0 0;font-size:13px}
@@ -60,7 +62,14 @@ h1,h2,h3{margin:0 0 8px}
 <body>
 <div class="wrap">
   <div id="adminHero" class="hero">
-    <div class="brand"><img src="logo.png" alt="Tipsy Daisy logo"></div>
+    <div class="brand">
+      <img src="logo.png" alt="Tipsy Daisy logo">
+      <div class="brand-photos">
+        <img src="hero_photo_1.png" alt="Aile fotoğrafı 1" class="brand-photo">
+        <img src="hero_photo_2.png" alt="Aile fotoğrafı 2" class="brand-photo">
+        <img src="hero_photo_3.png" alt="Aile fotoğrafı 3" class="brand-photo">
+      </div>
+    </div>
     <div class="row">
       <button id="btnAdmin" class="primary" type="button">Admin</button>
       <button id="btnGuest" class="secondary" type="button">Misafir Menüsü</button>
@@ -157,7 +166,14 @@ h1,h2,h3{margin:0 0 8px}
 
   <div id="guestMode" class="hidden">
     <div class="card">
-      <div class="brand" style="margin-bottom:20px"><img src="logo.png" alt="Tipsy Daisy logo"></div>
+      <div class="brand" style="margin-bottom:20px">
+        <img src="logo.png" alt="Tipsy Daisy logo">
+        <div class="brand-photos">
+          <img src="hero_photo_1.png" alt="Aile fotoğrafı 1" class="brand-photo">
+          <img src="hero_photo_2.png" alt="Aile fotoğrafı 2" class="brand-photo">
+          <img src="hero_photo_3.png" alt="Aile fotoğrafı 3" class="brand-photo">
+        </div>
+      </div>
       <div id="guestTabs" class="menu-tabs"></div>
       <div class="toolbar-grid" style="margin-bottom:16px;">
         <input id="searchInput" placeholder="Ürün ara">
